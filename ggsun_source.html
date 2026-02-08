@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitzyer 3D | GGSUN Official</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-blue: #0A58CA;
+            --dark-navy: #0F172A;
+            --soft-blue: #E9F2FF;
+            --slate: #64748B;
+            --border-color: #E2E8F0;
+            --gold: #FFB800;
+            --glass: rgba(255, 255, 255, 0.8);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: radial-gradient(circle at top right, #f8fafc, #e2e8f0);
+            color: var(--dark-navy);
+            min-height: 100vh;
+            overflow-x: hidden;
+            perspective: 1000px; /* 3D Depth start */
+        }
+
+        /* Nav Bar 3D Floating */
+        nav {
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            width: 90%;
+            margin: 20px auto;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .logo-text { font-weight: 800; font-size: 1.5rem; letter-spacing: -0.5px; }
+        .logo-text span { color: var(--primary-blue); }
+
+        /* Main Section with 3D Transform */
+        .hero-container {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 50px;
+            display: flex;
+            gap: 60px;
+            align-items: center;
+            background: var(--glass);
+            border-radius: 40px;
+            box-shadow: 20px 20px 60px rgba(0,0,0,0.05), -20px -20px 60px rgba(255,255,255,0.8);
+            transform: rotateX(5deg) rotateY(-5deg); /* Tilt effect */
+            transition: transform 0.5s ease;
+        }
+
+        .hero-container:hover {
+            transform: rotateX(0deg) rotateY(0deg) scale(1.02);
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            filter: drop-shadow(0 30px 50px rgba(10, 88, 202, 0.3));
+        }
+
+        /* 3D Floating Icon Box */
+        .icon-box {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(135deg, #0A58CA, #60A5FA);
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 110px;
+            color: white;
+            font-weight: 800;
+            position: relative;
+            animation: float 4s ease-in-out infinite;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* Hero Content */
+        .hero-content { flex: 1.2; }
+
+        .ver-badge {
+            background: white;
+            color: var(--primary-blue);
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(10, 88, 202, 0.1);
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            line-height: 1;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #0f172a, #334155);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Glass Cards for Metrics */
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .metric-item {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.02);
+            transition: 0.3s;
+            border: 1px solid #f1f5f9;
+        }
+
+        .metric-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        .metric-item b { display: block; font-size: 1.5rem; margin-bottom: 5px; }
+        .metric-item span { color: var(--slate); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Buttons with 3D Shadow */
+        .btn-main {
+            background: var(--primary-blue);
+            color: white;
+            padding: 20px 45px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 5px solid #064299;
+            transition: all 0.2s;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .btn-main:active {
+            transform: translateY(3px);
+            border-bottom-width: 2px;
+        }
+
+        /* Rating Stars Style */
+        .star-group { display: flex; gap: 10px; margin-top: 10px; }
+
+        .star-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            border: none;
+            background: white;
+            cursor: pointer;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+
+        .star-btn:hover {
+            background: var(--gold);
+            color: white;
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        footer {
+            margin-top: 100px;
+            padding: 40px;
+            text-align: center;
+            color: var(--slate);
+        }
+
+        /* Mobile View */
+        @media (max-width: 900px) {
+            .hero-container { flex-direction: column; margin: 20px; padding: 30px; transform: none; }
+            h1 { font-size: 3rem; }
+            .icon-box { width: 180px; height: 180px; font-size: 70px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo-text">g3n<span> - </span>Hitzyer</div>
+    <div style="font-size: 0.8rem; color: var(--slate);">System Online</div>
+</nav>
+
+<div class="hero-container">
+    <div class="hero-image">
+        <div class="icon-box">H</div>
+    </div>
+
+    <div class="hero-content">
+        <div class="ver-badge"><i class="fas fa-shield-halved"></i> Version 1.0.0</div>
+        <h1>Hitzyer</h1>
+        <p class="dev-info">Developed by <b>Sunam Sarkar</b> • GGSUN Enterprise</p>
+
+        <div class="metrics">
+            <div class="metric-item">
+                <b>3.5/5.0</b>
+                <span>Rating</span>
+            </div>
+            <div class="metric-item">
+                <b>40 MB</b>
+                <span>Size</span>
+            </div>
+            <div class="metric-item">
+                <b>243+</b>
+                <span>Users</span>
+            </div>
+        </div>
+
+        <div class="btn-row">
+            <a href="https://www.mediafire.com/file/2nhs52lctqh0o3p/Hitzyer_1.0.0.apk/file" class="btn-main">
+                <i class="fas fa-cloud-arrow-down"></i> DOWNLOAD APK
+            </a>
+
+            <div class="rating-container" style="margin-top: 30px;">
+                <span style="font-size: 0.8rem; font-weight: 800; color: var(--slate);">USER EXPERIENCE RATING</span>
+                <div class="star-group">
+                    <button class="star-btn" onclick="setRating(1)">1</button>
+                    <button class="star-btn" onclick="setRating(2)">2</button>
+                    <button class="star-btn" onclick="setRating(3)">3</button>
+                    <button class="star-btn" onclick="setRating(4)">4</button>
+                    <button class="star-btn" onclick="setRating(5)">5</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright © 2025-2026 ggsun All rights reserved.</p>
+</footer>
+
+<script>
+    function setRating(n) {
+        g3n("System updated! Rating " + n + "/5 received. Thank you!");
+    }
+
+    // Mouse tilt effect for 3D feel
+    const card = document.querySelector('.hero-container');
+    document.addEventListener('mousemove', (e) => {
+        let xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+        let yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+        card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+    });
+</script>
+
+</body>
+</html>
