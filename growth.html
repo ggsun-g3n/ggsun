@@ -1,0 +1,421 @@
+<script>
+  atOptions = {
+    'key' : 'f86f8c3630cfb702ae04ebc55efdcce5',
+    'format' : 'iframe',
+    'height' : 50,
+    'width' : 320,
+    'params' : {}
+  };
+</script>
+<script src="https://www.highperformanceformat.com/f86f8c3630cfb702ae04ebc55efdcce5/invoke.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --yt-red: #FF0000;
+            --yt-dark-red: #cc0000;
+            --secondary-color: #28a745;
+            --dark-bg: #121212;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            /* Pink & White Theme Colors */
+            --nav-bg: #ffffff;
+            --pink-main: #e1306c;
+            --pink-light: #ff85a2;
+            --pink-gradient: linear-gradient(135deg, #e1306c 0%, #ff85a2 100%);
+            --gold-main: #b38728;
+        }
+
+        * { 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: var(--text-color);
+            overflow-x: hidden; 
+            width: 100%;
+        }
+
+        /* --- Refined Navigation Bar --- */
+        nav {
+            background: var(--nav-bg); 
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 15px rgba(225, 48, 108, 0.15);
+            border-bottom: 2px solid #fce4ec;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+        }
+
+        .nav-links { 
+            display: flex; 
+            gap: 10px; 
+            position: relative;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--pink-main); 
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 50px;
+            white-space: nowrap;
+            border: 1px solid transparent;
+            position: relative;
+            z-index: 2;
+        }
+
+        .nav-links a.active {
+            background: var(--pink-gradient);
+            color: #ffffff;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(225, 48, 108, 0.3);
+        }
+
+        /* --- Smooth Section Transitions --- */
+        .page-section {
+            display: none; 
+            width: 100%;
+            opacity: 0;
+        }
+
+        .page-section.active {
+            display: block;
+            animation: slideInRight 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .page-section.exit {
+            display: block;
+            animation: slideOutLeft 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            position: absolute;
+            top: 60px; /* Offset for nav */
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideOutLeft {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(-50px); }
+        }
+
+        .animate-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Hero Sections --- */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            color: white;
+            width: 100%;
+        }
+
+        .hero-yt {
+            background: linear-gradient(135deg, #FF0000 0%, #b30000 100%);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover { transform: translateY(-5px); }
+
+        .price-list { list-style: none; padding: 0; margin: 20px 0; }
+        .price-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95rem;
+        }
+        .price-list b { color: var(--yt-red); }
+
+        /* --- Shine Button Animation --- */
+        .cta-button {
+            display: inline-block;
+            background: #25D366;
+            color: white;
+            padding: 14px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+            border: none;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+            outline: none;
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: rotate(30deg);
+            animation: shine 2.5s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -60%; }
+            20% { left: 120%; }
+            100% { left: 120%; }
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: #fff;
+            border-top: 1px solid #eee;
+        }
+
+        @media (max-width: 600px) {
+            .nav-links { gap: 5px; }
+            .nav-links a { font-size: 0.75rem; padding: 8px 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-links">
+            <a onclick="showSection('youtube')" id="link-youtube" class="active">YouTube</a>
+            <a onclick="showSection('instagram')" id="link-instagram">Instagram</a>
+            <a onclick="showSection('facebook')" id="link-facebook">Facebook</a>
+            <a onclick="showSection('contact')" id="link-contact">Contact</a>
+        </div>
+    </nav>
+
+    <div id="youtube" class="page-section active">
+        <section class="hero hero-yt">
+            <h1 class="animate-up">YouTube Service</h1>
+            <p class="animate-up" style="animation-delay: 0.1s;">• 1K Subscribers + 4K Watch Time<br>
+• Shorts Monetization Support<br>
+• Organic & Policy Safe<br>
+• 100% Secure Process.</p>
+        </section>
+        <div class="container">
+            <div class="pricing-grid">
+                <div class="card animate-up" style="animation-delay: 0.2s; border-top: 5px solid var(--yt-red);">
+                    <h3><i class="fab fa-youtube" style="color:var(--yt-red)"></i> Subscribers</h3>
+                    <ul class="price-list">
+                        <li>50 Subscribers <b>₹200</b></li>
+                        <li>100 Subscribers <b>₹350</b></li>
+                        <li>500 Subscribers <b>₹1400</b></li>
+                        <li>1K Subscribers <b>₹2500</b></li>
+                        <li>2K Subscribers <b>₹4500</b></li>
+                        <li>5K Subscribers <b>₹8600</b></li>
+                    </ul>
+                    <center><a href="https://wa.me/917355631411" class="cta-button">Order Now</a></center>
+                </div>
+                <div class="card animate-up" style="animation-delay: 0.3s; border-top: 5px solid var(--yt-red);">
+                    <h3><i class="fas fa-play-circle" style="color:var(--yt-red)"></i> Views</h3>
+                    <ul class="price-list">
+                        <li>500 Views <b>₹130</b></li>
+                        <li>1K Views <b>₹250</b></li>
+                        <li>3K Views <b>₹600</b></li>
+                        <li>5K Views <b>₹950</b></li>
+                        <li>10K Views <b>₹1800</b></li>
+                    </ul>
+                    <center><a href="https://wa.me/917355631411" class="cta-button">Order Now</a></center>
+                </div>
+                <div class="card animate-up" style="animation-delay: 0.4s; border-top: 5px solid var(--yt-red);">
+                    <h3><i class="fas fa-thumbs-up" style="color:var(--yt-red)"></i> Likes</h3>
+                    <ul class="price-list">
+                        <li>100 Likes <b>₹25</b></li>
+                        <li>500 Likes <b>₹60</b></li>
+                        <li>1K Likes <b>₹100</b></li>
+                        <li>5K Likes <b>₹450</b></li>
+                    </ul>
+                    <center><a href="https://wa.me/917355631411" class="cta-button">Order Now</a></center>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="instagram" class="page-section">
+        <section class="hero" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);">
+            <h1 class="animate-up">Instagram Service</h1>
+            <p class="animate-up">Real followers and instant views.</p>
+        </section>
+        <div class="container">
+            <div class="pricing-grid">
+                <div class="card animate-up" style="border-top: 5px solid #e1306c;">
+                    <h3><i class="fab fa-instagram" style="color:#e1306c"></i> Followers</h3>
+                    <ul class="price-list">
+                        <li>100 Followers (Demo) <b>₹30</b></li>
+                        <li>1K Followers <b>₹180</b></li>
+                        <li>2K Followers <b>₹350</b></li>
+                        <li>5K Followers <b>₹800</b></li>
+                        <li>10K Followers <b>₹1550</b></li>
+                    </ul>
+                    <center><a href="https://wa.me/917355631411" class="cta-button">Order Now</a></center>
+                </div>
+                <div class="card animate-up" style="border-top: 5px solid #e1306c;">
+                    <h3><i class="fas fa-heart" style="color:#e1306c"></i> Likes</h3>
+                    <ul class="price-list">
+                        <li>1K Likes <b>₹50</b></li>
+                        <li>2K Likes <b>₹85</b></li>
+                        <li>5K Likes <b>₹180</b></li>
+                        <li>10K Likes <b>₹250</b></li>
+                    </ul>
+                    <center><a href="https://wa.me/917355631411" class="cta-button">Order Now</a></center>
+                </div>
+                <div class="card animate-up" style="border-top: 5px solid #e1306c;">
+                    <h3><i class="fas fa-video" style="color:#e1306c"></i> Views</h3>
+                    <ul class="price-list">
+                        <li>10K Views <b>₹40</b></li>
+                        <li>20K Views <b>₹65</b></li>
+                        <li>50K Views <b>₹80</b></li>
+                        <li>100K Views <b>₹100</b></li>
+                        <li>200K Views <b>₹150</b></li>
+                        <li>500K Views <b>₹300</b></li>
+                        <li>1M Views <b>₹400</b></li>
+                    </ul>
+                    <center><a href="https://wa.me/917355631411" class="cta-button">Order Now</a></center>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="facebook" class="page-section">
+        <section class="hero" style="background: #1877f2;">
+            <h1 class="animate-up">Facebook Service</h1>
+            <p class="animate-up">Grow your business presence.</p>
+        </section>
+        <div class="container">
+            <div class="card animate-up" style="max-width: 500px; margin: 0 auto; border-top: 5px solid #1877f2;">
+                <h3><i class="fab fa-facebook" style="color:#1877f2"></i> FACEBOOK SERVICES</h3>
+                <ul class="price-list">
+                    <li>Page Followers <b>Contact me</b></li>
+                    <li>Post Likes <b>Contact me</b></li>
+                    <li>Video Views <b>Contact me</b></li>
+                    <li>Share Boost <b>Contact me</b></li>
+                    <li>Comment Boost <b>Contact me</b></li>
+                </ul>
+                <center><a href="https://wa.me/917355631411" class="cta-button">Contact Now</a></center>
+            </div>
+        </div>
+    </div>
+
+    <div id="contact" class="page-section">
+        <section class="hero" style="background: #222;">
+            <h1 class="animate-up">Contact Us</h1>
+            <p class="animate-up">24/7 WhatsApp Support</p>
+        </section>
+        <div class="container" style="text-align: center;">
+            <div class="card animate-up" style="max-width: 500px; margin: 0 auto; border-top: 5px solid #333;">
+                <h2>WhatsApp Support</h2>
+                <p>Message us for any inquiries</p>
+                <p><strong>+91 7355631411</strong></p>
+                <a href="https://wa.me/917355631411" class="cta-button" style="background: #25D366;">
+                    <i class="fab fa-whatsapp"></i> Chat Now
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© copyright bhai kisko du?.</p>
+    </footer>
+
+    <script>
+        let isTransitioning = false;
+
+        function showSection(sectionId) {
+            if (isTransitioning) return;
+            
+            const currentSection = document.querySelector('.page-section.active');
+            const targetSection = document.getElementById(sectionId);
+            const links = document.querySelectorAll('.nav-links a');
+
+            if (currentSection.id === sectionId) return;
+
+            isTransitioning = true;
+
+            // Update Nav Links
+            links.forEach(link => link.classList.remove('active'));
+            document.getElementById('link-' + sectionId).classList.add('active');
+
+            // Animation logic
+            currentSection.classList.add('exit');
+            currentSection.classList.remove('active');
+
+            targetSection.style.display = 'block';
+            setTimeout(() => {
+                targetSection.classList.add('active');
+            }, 10);
+
+            setTimeout(() => {
+                currentSection.classList.remove('exit');
+                currentSection.style.display = 'none';
+                
+                // Refresh internal card animations
+                const animatedElements = targetSection.querySelectorAll('.animate-up');
+                animatedElements.forEach(el => {
+                    el.style.animation = 'none';
+                    el.offsetHeight; 
+                    el.style.animation = null;
+                });
+                
+                isTransitioning = false;
+            }, 500);
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+
+</body>
+</html>
+<script async="async" data-cfasync="false" src="https://pl28705563.effectivegatecpm.com/70ab1298a47dc270e37efb084d95119c/invoke.js"></script>
+<div id="container-70ab1298a47dc270e37efb084d95119c"></div>
