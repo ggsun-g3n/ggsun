@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Smooth Pink and White Premium Theme with Sparkling Animations */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #fff5f7;
+            color: #4a4a4a;
+            line-height: 1.6;
+        }
+
+        /* --- Animations Keyframes --- */
+        @keyframes titleGlow {
+            0% { text-shadow: 2px 2px 10px rgba(239, 71, 111, 0.3); }
+            50% { text-shadow: 0px 0px 25px rgba(255, 255, 255, 0.8), 0px 0px 15px #ef476f; }
+            100% { text-shadow: 2px 2px 10px rgba(239, 71, 111, 0.3); }
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(1); box-shadow: 0 5px 15px rgba(239, 71, 111, 0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(255, 133, 162, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 5px 15px rgba(239, 71, 111, 0.3); }
+        }
+
+        @keyframes floatAnim {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); border-color: #ff85a2; box-shadow: 0 20px 40px rgba(255, 133, 162, 0.3); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes borderFlash {
+            0% { border-color: #ffb3c1; }
+            50% { border-color: #ef476f; box-shadow: 0 0 20px #ff85a2; }
+            100% { border-color: #ffb3c1; }
+        }
+
+        @keyframes shinySweep {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes navGlow {
+            0% { background: transparent; }
+            50% { background: rgba(255, 133, 162, 0.1); }
+            100% { background: transparent; }
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        /* --- Header --- */
+        header {
+            background: linear-gradient(135deg, #ff85a2 0%, #ffacbd 100%);
+            color: #fff;
+            padding: 80px 0;
+            text-align: center;
+            border-bottom: 4px solid #ffb3c1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            letter-spacing: 2px;
+            animation: titleGlow 3s infinite ease-in-out;
+            position: relative;
+            z-index: 2;
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+            transform: skewX(-25deg);
+            animation: shinySweep 4s infinite;
+        }
+
+        header p {
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* --- Navigation --- */
+        nav {
+            background: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(255, 133, 162, 0.1);
+            border-bottom: 1px solid #fff0f3;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        nav ul li a {
+            color: #ef476f;
+            text-decoration: none;
+            padding: 20px 25px;
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        nav ul li a::after {
+            content: "";
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: #ef476f;
+            transition: 0.4s;
+            transform: translateX(-50%);
+            border-radius: 10px;
+        }
+
+        nav ul li a:hover {
+            color: #ff4d79;
+            transform: translateY(-2px);
+        }
+
+        nav ul li a:hover::after {
+            width: 50%;
+        }
+
+        /* --- Sections as Full Pages --- */
+        .page-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 100px 0;
+            border-bottom: 1px solid #ffeef2;
+        }
+
+        /* Background variations */
+        #home { background: #ffffff; }
+        #about { background: #fffbfc; }
+        #features { background: #ffffff; }
+        #rules { background: #fffbfc; }
+        #store { background: #ffffff; }
+        #contact { background: #fffbfc; }
+
+        h2 {
+            color: #ef476f;
+            font-size: 3rem;
+            margin-bottom: 40px;
+            text-align: center;
+            animation: titleGlow 5s infinite;
+        }
+
+        /* --- Hero/Home specific --- */
+        .server-box {
+            background: #fff0f3;
+            padding: 40px;
+            margin: 30px auto;
+            text-align: center;
+            border: 2px solid #ffb3c1;
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+            animation: borderFlash 3s infinite ease-in-out;
+        }
+
+        .server-box::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 30%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.8), transparent);
+            transform: skewX(-25deg);
+            animation: shinySweep 5s infinite;
+        }
+
+        .btn {
+            display: inline-block;
+            margin: 15px;
+            padding: 18px 45px;
+            background: #ef476f;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: 0.3s;
+            animation: pulseGlow 2.5s infinite ease-in-out;
+        }
+
+        .btn.secondary {
+            background: #fff;
+            color: #ef476f;
+            border: 2px solid #ef476f;
+        }
+
+        /* --- List Styles --- */
+        .list {
+            width: 100%;
+            max-width: 850px;
+            list-style: none;
+        }
+
+        .list li {
+            background: #fff;
+            margin-bottom: 20px;
+            padding: 25px 35px;
+            border-radius: 20px;
+            border-left: 8px solid #ff85a2;
+            box-shadow: 0 10px 30px rgba(255, 133, 162, 0.1);
+            transition: 0.4s;
+            font-size: 1.1rem;
+        }
+
+        .list li:hover {
+            transform: scale(1.05) translateX(15px);
+            border-left: 8px solid #ef476f;
+            background: #fffbfc;
+            box-shadow: 0 15px 40px rgba(255, 133, 162, 0.25);
+        }
+
+        /* --- Store Cards --- */
+        .store-box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            width: 100%;
+            margin-top: 50px;
+        }
+
+        .store-box div {
+            background: #fff;
+            padding: 50px;
+            text-align: center;
+            border-radius: 35px;
+            border: 2px solid #fff0f3;
+            animation: floatAnim 4s infinite ease-in-out;
+            box-shadow: 0 15px 45px rgba(255, 133, 162, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .store-box div h3 {
+            color: #ef476f;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: #fff;
+            color: #ef476f;
+            text-align: center;
+            padding: 60px 0;
+            border-top: 2px solid #fff0f3;
+        }
+
+        /* --- Mobile --- */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.2rem; }
+            h2 { font-size: 2.2rem; }
+            nav ul li a { padding: 15px 10px; font-size: 0.7rem; }
+            .page-section { padding: 60px 0; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>MCWorld Adventure</h1>
+        <p>Professional Minecraft Server</p>
+    </div>
+</header>
+
+<nav>
+    <ul class="container">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#rules">Rules</a></li>
+        <li><a href="#store">Store</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<section id="home" class="page-section">
+    <div class="container" style="text-align: center;">
+        <h2>Welcome to MCWorld Adventure</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 30px;">A stable and community-driven Minecraft server built for fair gameplay.</p>
+        <div class="server-box">
+            <strong style="font-size: 1.2rem;">Server IP:</strong> <br>
+            <span style="color: #ef476f; font-weight: bold; font-size: 2rem;">play.mcworldadventure.net</span><br><br>
+            <strong>Version:</strong> 1.20.x (Java)
+        </div>
+        <div style="margin-top: 20px;">
+            <a class="btn" href="#">Join Server</a>
+            <a class="btn secondary" href="#">Vote Server</a>
+        </div>
+    </div>
+</section>
+
+<section id="about" class="page-section">
+    <div class="container">
+        <h2>About the Server</h2>
+        <div style="background: white; padding: 50px; border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.05); max-width: 900px; margin: auto; text-align: center;">
+            <p style="font-size: 1.3rem; color: #666; line-height: 1.8;">
+                MCWorld Adventure is a professionally managed Minecraft server designed
+                to provide a smooth, secure, and enjoyable experience for all players.
+                We focus on long-term stability, regular updates, and fair rules.
+                Hamara maqsad ek aisi community banana hai jahan har player bina kisi lag aur pareshani ke khel sake.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section id="features" class="page-section">
+    <div class="container" style="display: flex; flex-direction: column; align-items: center;">
+        <h2>Server Features</h2>
+        <ul class="list">
+            <li>✨ 24/7 uptime and lag-free performance</li>
+            <li>🛡️ Active and helpful staff team</li>
+            <li>🌍 Survival and custom game modes</li>
+            <li>🔒 Anti-grief and protection systems</li>
+            <li>💰 Balanced economy and rewards</li>
+        </ul>
+    </div>
+</section>
+
+<section id="rules" class="page-section">
+    <div class="container" style="display: flex; flex-direction: column; align-items: center;">
+        <h2>Server Rules</h2>
+        <ol class="list">
+            <li>1. Respect all players and staff members.</li>
+            <li>2. No hacks, cheats, or third-party exploits.</li>
+            <li>3. No spamming, toxicity, or advertising.</li>
+            <li>4. Offensive content or skins are not allowed.</li>
+            <li>5. Staff decisions are final in all cases.</li>
+        </ol>
+    </div>
+</section>
+
+<section id="store" class="page-section">
+    <div class="container">
+        <h2>Premium Store</h2>
+        <p style="text-align: center; font-size: 1.2rem; max-width: 700px; margin: 0 auto 40px auto;">
+            Support the server by purchasing optional ranks and perks. 
+            All payments are used for server maintenance and development.
+        </p>
+        <div class="store-box">
+            <div>
+                <h3>Starter Rank</h3>
+                <p>Basic perks, color chat, and in-game coins to start your journey.</p>
+                <a href="#" class="btn" style="padding: 10px 25px; font-size: 0.9rem; margin-top: 20px;">View Details</a>
+            </div>
+            <div>
+                <h3>VIP Rank</h3>
+                <p>Extra commands, fly in lobby, and exclusive particle features.</p>
+                <a href="#" class="btn" style="padding: 10px 25px; font-size: 0.9rem; margin-top: 20px;">View Details</a>
+            </div>
+            <div>
+                <h3>Legend Rank</h3>
+                <p>Premium access, all exclusive perks, and priority staff support.</p>
+                <a href="#" class="btn" style="padding: 10px 25px; font-size: 0.9rem; margin-top: 20px;">View Details</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="page-section">
+    <div class="container">
+        <h2>Contact Us</h2>
+        <div style="background: white; padding: 60px; border-radius: 40px; box-shadow: 0 20px 60px rgba(239, 71, 111, 0.1); max-width: 600px; margin: auto; text-align: center;">
+            <div style="margin-bottom: 30px;">
+                <h4 style="color: #ef476f; font-size: 1.5rem;">Email Support</h4>
+                <p style="font-size: 1.2rem;">support@mcworldadventure.net</p>
+            </div>
+            <div style="margin-bottom: 30px;">
+                <h4 style="color: #ef476f; font-size: 1.5rem;">Discord Community</h4>
+                <p style="font-size: 1.2rem;">discord.gg/mcworld</p>
+            </div>
+            <div>
+                <h4 style="color: #ef476f; font-size: 1.5rem;">Official Website</h4>
+                <p style="font-size: 1.2rem;">www.mcworldadventure.net</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p>Copyright © 2025-2026 ggsun All rights reserved.</p>
+        <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.7;"></p>
+    </div>
+</footer>
+
+</body>
+</html>
