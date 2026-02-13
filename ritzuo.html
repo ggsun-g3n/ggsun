@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GGSUN Official</title>
+    
+    <link rel="icon" type="image/png" href="https://replicate.delivery/yhqm/Uf1C5y6P2YV7Mye6p8LleXN9pGf4HceCebGzIevvSInXoRkeE/out-0.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Orange replaced with Blue Palette */
+            --primary-blue: #0070FF;
+            --dark-accent: #071A43;
+            --soft-blue: #EDF5FF;
+            --slate: #71717a;
+            --border-color: #74B9FD;
+            --gold: #FFB800;
+            --glass: rgba(255, 255, 255, 0.9);
+            --white: #FFFFFF;
+        }
+
+        /* Disable Text Selection */
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box;
+            -webkit-user-select: none; 
+            -ms-user-select: none; 
+            user-select: none; 
+            -webkit-tap-highlight-color: transparent; 
+        }
+
+        /* Prevent outline on click */
+        button, a {
+            outline: none !important;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: radial-gradient(circle at top right, #FFFFFF, #E0F2FE);
+            color: var(--dark-accent);
+            min-height: 100vh;
+            overflow-x: hidden;
+            perspective: 1000px;
+            scroll-behavior: smooth;
+        }
+
+        /* Notification Square Style */
+        .notification {
+            position: fixed;
+            top: -120px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--white);
+            color: var(--primary-blue);
+            padding: 20px 30px;
+            border-radius: 15px; 
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 700;
+            border: 1px solid rgba(0, 112, 255, 0.1);
+        }
+
+        .notification.show {
+            top: 30px;
+        }
+
+        .notification i {
+            font-size: 1.5rem;
+        }
+
+        /* Nav Bar 3D Floating */
+        nav {
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            width: 90%;
+            margin: 20px auto;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 112, 255, 0.1);
+            border: 1px solid rgba(0, 112, 255, 0.2);
+        }
+
+        .logo-text { font-weight: 800; font-size: 1.5rem; letter-spacing: -0.5px; }
+        .logo-text span { color: var(--primary-blue); }
+
+        /* Main Section with 3D Transform */
+        .hero-container {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 50px;
+            display: flex;
+            gap: 60px;
+            align-items: center;
+            background: var(--white);
+            border-radius: 40px;
+            box-shadow: 20px 20px 60px rgba(0, 112, 255, 0.05), -20px -20px 60px rgba(255,255,255,0.8);
+            transform: rotateX(5deg) rotateY(-5deg);
+            transition: transform 0.5s ease;
+            border: 1px solid #F0F9FF;
+        }
+
+        .hero-container:hover {
+            transform: rotateX(0deg) rotateY(0deg) scale(1.02);
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            filter: drop-shadow(0 30px 50px rgba(0, 112, 255, 0.2));
+        }
+
+        /* 3D Floating Icon Box */
+        .icon-box {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(135deg, #0070FF, #00D1FF);
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 110px;
+            color: white;
+            font-weight: 800;
+            position: relative;
+            animation: float 4s ease-in-out infinite;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* Hero Content */
+        .hero-content { flex: 1.2; }
+
+        .ver-badge {
+            background: var(--soft-blue);
+            color: var(--primary-blue);
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(0, 112, 255, 0.1);
+            border: 1px solid rgba(0, 112, 255, 0.1);
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            line-height: 1;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #0070FF, #1E40AF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Glass Cards for Metrics */
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .metric-item {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 112, 255, 0.03);
+            transition: 0.3s;
+            border: 1px solid #E0F2FE;
+        }
+
+        .metric-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 112, 255, 0.1);
+            background: var(--soft-blue);
+        }
+
+        .metric-item b { display: block; font-size: 1.5rem; margin-bottom: 5px; color: var(--primary-blue); }
+        .metric-item span { color: var(--slate); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Chamkila Buttons with Shimmer */
+        .btn-main {
+            background: var(--primary-blue);
+            color: white;
+            padding: 20px 45px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 5px solid #1D4ED8;
+            transition: all 0.2s;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            outline: none;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .btn-main::after, .star-btn::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        .btn-main:active {
+            transform: translateY(3px);
+            border-bottom-width: 2px;
+        }
+
+        /* Rating Stars Style */
+        .star-group { display: flex; gap: 10px; margin-top: 10px; }
+
+        .star-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            border: 1px solid #E0F2FE;
+            background: white;
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--primary-blue);
+            box-shadow: 0 5px 15px rgba(0, 112, 255, 0.05);
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+            outline: none;
+        }
+
+        .star-btn.active {
+            background: var(--primary-blue);
+            color: white;
+            transform: scale(1.1);
+            border-color: var(--primary-blue);
+        }
+
+        .star-btn:hover {
+            background: var(--primary-blue);
+            color: white;
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        footer {
+            margin-top: 100px;
+            padding: 40px;
+            text-align: center;
+            color: var(--slate);
+        }
+
+        @media (max-width: 900px) {
+            .hero-container { flex-direction: column; margin: 20px; padding: 30px; transform: none !important; }
+            h1 { font-size: 3rem; }
+            .icon-box { width: 180px; height: 180px; font-size: 70px; }
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;"> 
+
+<div id="notif" class="notification">
+    <i class="fas fa-star"></i>
+    <span id="notif-text">Rating saved!</span>
+</div>
+
+<nav>
+    <div class="logo-text">g3n<span> - </span>Hitzyer</div>
+    <div style="font-size: 0.8rem; color: var(--primary-blue); font-weight: 600;">System Online</div>
+</nav>
+
+<div class="hero-container">
+    <div class="hero-image">
+        <div class="icon-box">H</div>
+    </div>
+
+    <div class="hero-content">
+        <div class="ver-badge"><i class="fas fa-shield-halved"></i> Version 1.0.1</div>
+        <h1>Hitzyer</h1>
+        <p class="dev-info">Developed by <b>Sunam Sarkar</b> • GGSUN Enterprise</p>
+
+        <div class="metrics">
+            <div class="metric-item">
+                <b>3.5/5.0</b>
+                <span>Rating</span>
+            </div>
+            <div class="metric-item">
+                <b>40 MB</b>
+                <span>Size</span>
+            </div>
+            <div class="metric-item">
+                <b>14+</b>
+                <span>Users</span>
+            </div>
+        </div>
+
+        <div class="btn-row">
+            <a href="https://www.mediafire.com/file/2nhs52lctqh0o3p/Hitzyer_1.0.0.apk/file" class="btn-main">
+                <i class="fas fa-cloud-arrow-down"></i> DOWNLOAD APK
+            </a>
+
+            <div class="rating-container" style="margin-top: 30px;">
+                <span style="font-size: 0.8rem; font-weight: 800; color: var(--slate);">USER EXPERIENCE RATING</span>
+                <div class="star-group">
+                    <button class="star-btn" data-val="1" onclick="setRating(1)">1</button>
+                    <button class="star-btn" data-val="2" onclick="setRating(2)">2</button>
+                    <button class="star-btn" data-val="3" onclick="setRating(3)">3</button>
+                    <button class="star-btn" data-val="4" onclick="setRating(4)">4</button>
+                    <button class="star-btn" data-val="5" onclick="setRating(5)">5</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright © 2025-2026 ggsun All rights reserved.</p>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedRating = localStorage.getItem('userRating');
+        if (savedRating) {
+            highlightStars(savedRating);
+        }
+    });
+
+    function setRating(n) {
+        localStorage.setItem('userRating', n);
+        highlightStars(n);
+
+        const notif = document.getElementById('notif');
+        const notifText = document.getElementById('notif-text');
+        notifText.innerText = `Successfully rated ${n} stars!`;
+        notif.classList.add('show');
+        
+        setTimeout(() => {
+            notif.classList.remove('show');
+        }, 3000);
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function highlightStars(n) {
+        const stars = document.querySelectorAll('.star-btn');
+        stars.forEach(star => {
+            star.classList.remove('active');
+            if (star.getAttribute('data-val') == n) {
+                star.classList.add('active');
+            }
+        });
+    }
+
+    const card = document.querySelector('.hero-container');
+    document.addEventListener('mousemove', (e) => {
+        if(window.innerWidth > 900) {
+            let xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            let yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        }
+    });
+</script>
+
+</body>
+</html>
