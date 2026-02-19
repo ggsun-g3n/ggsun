@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title></title>
+    <style>
+        :root {
+            --primary-color: #ff8c00;
+            --primary-hover: #e67e00;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --accent: #ff7e5f;
+            --text-main: #2d3436;
+            --success: #27ae60;
+            --danger: #e74c3c;
+        }
+
+        * {
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            overflow: hidden; 
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Room & Timer Container */
+        #top-header-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: absolute;
+            top: 10px;
+            z-index: 1000;
+        }
+
+        .top-info-box {
+            font-weight: 900; 
+            font-size: 14px; 
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        #redirect-timer-container {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        #redirect-link {
+            background: #27ae60;
+            color: white;
+            text-decoration: none;
+            padding: 4px 12px;
+            border-radius: 10px;
+            display: none; 
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        #game-section {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin-top: 60px;
+        }
+
+        .game-container { 
+            background: var(--card-bg); 
+            padding: 25px; 
+            border-radius: 32px; 
+            width: 90%; 
+            max-width: 400px; 
+            box-shadow: 0 40px 100px rgba(0,0,0,0.15);
+            text-align: center;
+            position: relative;
+        }
+
+        .flight-zone {
+            height: 240px; 
+            background: linear-gradient(to bottom, #ff9966, #ff5e62);
+            border-radius: 24px; 
+            position: relative; 
+            overflow: hidden;
+            margin-bottom: 15px; 
+            border: 4px solid #ffffff;
+        }
+
+        .sky-bg {
+            position: absolute; width: 100%; height: 200%; top: -100%;
+            background-image: radial-gradient(2px 2px at 40px 60px, #fff, transparent);
+            background-size: 200px 200px; 
+            animation: climbBg 3s linear infinite;
+            animation-play-state: paused;
+            opacity: 0.5;
+        }
+
+        @keyframes climbBg { from { transform: translateY(0); } to { transform: translateY(50%); } }
+
+        #multiplier {
+            position: absolute; top: 30%; width: 100%;
+            font-size: 4.5rem; font-weight: 900; color: white;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        #craft-container {
+            position: absolute; bottom: 30px; left: 50%;
+            transform: translateX(-50%) rotate(-15deg);
+            width: 70px; height: 70px; opacity: 0; 
+        }
+
+        .flying-anim { animation: hover 1.5s ease-in-out infinite; opacity: 1 !important; }
+        @keyframes hover {
+            0%, 100% { transform: translateX(-50%) translateY(0) rotate(-15deg); }
+            50% { transform: translateX(-50%) translateY(-15px) rotate(-5deg); }
+        }
+
+        .stats { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 13px; font-weight: 800; }
+        .controls-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+
+        .input-box { background: #f1f2f6; padding: 8px 12px; border-radius: 15px; border: 2px solid #e1e2e6; text-align: left; }
+        .input-box label { font-size: 9px; color: #a4b0be; font-weight: 800; display: block; text-transform: uppercase; }
+        .input-box input { background: transparent; border: none; width: 100%; font-size: 14px; font-weight: 800; outline: none; }
+
+        .auto-controls { display: flex; gap: 8px; margin-bottom: 15px; }
+        .btn-mini { padding: 12px; font-size: 11px; border-radius: 12px; flex: 1; font-weight: 800; background: #dfe6e9; border: none; cursor: pointer; transition: 0.3s; }
+        .active-auto { background: var(--accent) !important; color: white !important; }
+
+        button.main-btn { width: 100%; padding: 16px; border-radius: 18px; border: none; font-size: 18px; font-weight: 900; cursor: pointer; }
+        .btn-bet { background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%); color: white; }
+        .btn-cash { background: var(--success); color: white; display: none; }
+        .btn-waiting { background: #dfe6e9; color: #b2bec3; cursor: not-allowed; display: none; }
+        .btn-cancel { background: #e74c3c; color: white; display: none; }
+        
+        #notification-container { position: fixed; top: 120px; right: 20px; z-index: 1000; }
+        .notification { background: white; border-left: 5px solid var(--accent); padding: 10px 20px; border-radius: 8px; margin-bottom: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); font-size: 12px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div id="top-header-container">
+    <div class="top-info-box">
+        <span id="roomNumber">TRIAL ROOM: #----</span>
+    </div>
+    <div id="redirect-timer-container">
+        <span>𝕋𝕀𝕄𝔼 𝕃𝔼𝔽𝕋: <span id="countdown-timer">30</span>𝕤</span>
+        <a href="https://gg-sun.in" id="redirect-link">...</a>
+    </div>
+</div>
+
+<div id="game-section">
+    <div id="notification-container"></div>
+
+    <div class="game-container">
+        <div class="stats">
+            <span>BALANCE: <b id="balance" style="color: var(--accent);">₹1000.00</b></span>
+            <span>BEST: <b id="highScore">1.00</b>x</span>
+        </div>
+
+        <div class="flight-zone">
+            <div class="sky-bg" id="skyBg"></div>
+            <div id="multiplier">WAIT</div>
+            <div id="craft-container">
+                <svg style="width:100%; height:100%; fill:white;" viewBox="0 0 24 24">
+                    <path d="M21,16V14L13,9V3.5A1.5,1.5 0 0,0 11.5,2A1.5,1.5 0 0,0 10,3.5V9L2,14V16L10,13.5V19L8,20.5V22L11.5,21L15,22V20.5L13,19V13.5L21,16Z" />
+                </svg>
+            </div>
+        </div>
+
+        <div class="controls-grid">
+            <div class="input-box"><label>BET AMOUNT</label><input type="number" id="betInput" value="10"></div>
+            <div class="input-box"><label>AUTO CASHOUT</label><input type="number" id="autoCashInput" value="2.0"></div>
+            <div class="input-box" style="grid-column: span 2;"><label>MIN START LIMIT</label><input type="number" id="startLimitInput" value="100"></div>
+        </div>
+
+        <div class="auto-controls">
+            <button class="btn-mini" id="autoStartBtn" onclick="toggleAutoStart()">AUTO START: OFF</button>
+            <button class="btn-mini" onclick="setLimit()">SET LIMIT</button>
+        </div>
+
+        <button id="betBtn" class="main-btn btn-bet" onclick="placeBet()">PLACE BET</button>
+        <button id="cancelBtn" class="main-btn btn-cancel" onclick="cancelBet()">CANCEL</button>
+        <button id="cashBtn" class="main-btn btn-cash" onclick="cashOut()">CASH OUT</button>
+        <button id="waitingBtn" class="main-btn btn-waiting">WAITING...</button>
+    </div>
+</div>
+
+<script>
+    let balance = 1000.00, multiplier = 1.0, isGameRunning = false, isUserInRound = false;
+    let betQueued = false, autoStartActive = false, minStartBalance = 100;
+    let currentBet = 0, crashPoint, gameLoop, highScore = 1.0;
+
+    // Room ID Generation
+    document.getElementById('roomNumber').innerText = "TRIAL ROOM: #" + Math.floor(1000 + Math.random() * 9000);
+
+    // Global 30s Timer with Auto-Redirect
+    let globalSeconds = 30;
+    const countdownEl = document.getElementById('countdown-timer');
+    const redirectBtn = document.getElementById('redirect-link');
+
+    const globalTimer = setInterval(() => {
+        globalSeconds--;
+        if (globalSeconds >= 0) {
+            countdownEl.innerText = globalSeconds;
+        }
+        if (globalSeconds <= 0) {
+            clearInterval(globalTimer);
+            redirectBtn.style.display = "inline-block";
+            notify("Redirecting to GG-SUN.IN...");
+            // Automatic Redirect
+            window.location.href = "https://gg-sun.in";
+        }
+    }, 1000);
+
+    function notify(t) {
+        const n = document.createElement('div'); n.className = 'notification'; n.innerText = t;
+        document.getElementById('notification-container').appendChild(n);
+        setTimeout(() => n.remove(), 3000);
+    }
+
+    function serverLoop() {
+        if (isGameRunning) return;
+        let countdown = 5.0;
+        document.getElementById('multiplier').style.color = "white";
+        let timer = setInterval(() => {
+            document.getElementById('multiplier').innerText = countdown.toFixed(1) + "s";
+            countdown -= 0.1;
+            if (countdown <= 0) { clearInterval(timer); startFlight(); }
+        }, 100);
+    }
+
+    function placeBet() {
+        let bet = parseFloat(document.getElementById('betInput').value);
+        if (bet > balance || bet <= 0) return notify("Low Balance!");
+        currentBet = bet; betQueued = true;
+        document.getElementById('betBtn').style.display = "none";
+        document.getElementById('cancelBtn').style.display = "block";
+    }
+
+    function cancelBet() {
+        betQueued = false;
+        document.getElementById('betBtn').style.display = "block";
+        document.getElementById('cancelBtn').style.display = "none";
+    }
+
+    function toggleAutoStart() {
+        autoStartActive = !autoStartActive;
+        const btn = document.getElementById('autoStartBtn');
+        btn.classList.toggle('active-auto');
+        btn.innerText = autoStartActive ? "AUTO START: ON" : "AUTO START: OFF";
+    }
+
+    function setLimit() {
+        minStartBalance = parseFloat(document.getElementById('startLimitInput').value);
+        notify("Limit Set Successfully!");
+    }
+
+    function startFlight() {
+        isGameRunning = true; multiplier = 1.0;
+        
+        let autoCashValue = parseFloat(document.getElementById('autoCashInput').value);
+        let winChance = Math.random();
+        if (winChance <= 0.8) {
+            crashPoint = (autoCashValue + (Math.random() * 2 + 0.1)).toFixed(2);
+        } else {
+            crashPoint = (1.0 + (Math.random() * (autoCashValue - 1.05))).toFixed(2);
+            if(crashPoint < 1.1) crashPoint = 1.15;
+        }
+        
+        document.getElementById('cancelBtn').style.display = "none";
+        
+        if (betQueued) {
+            balance -= currentBet; updateUI();
+            isUserInRound = true; betQueued = false;
+            document.getElementById('cashBtn').style.display = "block";
+            document.getElementById('waitingBtn').style.display = "none";
+        } else {
+            document.getElementById('waitingBtn').style.display = "block";
+            document.getElementById('betBtn').style.display = "none";
+        }
+
+        document.getElementById('skyBg').style.animationPlayState = 'running';
+        document.getElementById('craft-container').classList.add('flying-anim');
+        
+        gameLoop = setInterval(() => {
+            multiplier += 0.01 + (multiplier * 0.001);
+            document.getElementById('multiplier').innerText = multiplier.toFixed(2) + "x";
+            
+            if (isUserInRound) {
+                document.getElementById('cashBtn').innerText = `CASH OUT (₹${(currentBet * multiplier).toFixed(2)})`;
+                if (multiplier >= parseFloat(document.getElementById('autoCashInput').value)) cashOut();
+            }
+            if (multiplier >= crashPoint) crash();
+        }, 60);
+    }
+
+    function cashOut() {
+        if (!isUserInRound) return;
+        balance += (currentBet * multiplier);
+        if (multiplier > highScore) highScore = multiplier.toFixed(2);
+        isUserInRound = false; updateUI();
+        document.getElementById('cashBtn').style.display = "none";
+        document.getElementById('waitingBtn').style.display = "block";
+    }
+
+    function crash() {
+        clearInterval(gameLoop); isGameRunning = false; isUserInRound = false;
+        document.getElementById('multiplier').style.color = "#ff4757";
+        document.getElementById('skyBg').style.animationPlayState = 'paused';
+        document.getElementById('craft-container').classList.remove('flying-anim');
+        
+        setTimeout(() => {
+            document.getElementById('betBtn').style.display = "block";
+            document.getElementById('waitingBtn').style.display = "none";
+            document.getElementById('cashBtn').style.display = "none";
+            if (autoStartActive && balance >= minStartBalance) placeBet();
+            serverLoop();
+        }, 2000);
+    }
+
+    function updateUI() {
+        document.getElementById('balance').innerText = `₹${balance.toFixed(2)}`;
+        document.getElementById('highScore').innerText = highScore;
+    }
+
+    window.onload = serverLoop;
+</script>
+</body>
+</html>
