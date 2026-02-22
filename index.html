@@ -3,9 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GGSUN Official</title>
     
-    <link rel="icon" type="image/png" href="https://gg-sun.in/favicon.png">
+    <title>GGSUN Official</title>
+    <meta name="title" content="GGSUN Official">
+    <meta name="description" content="The ultimate betting experience. Pro-level tools and a full demo version by gg-sun. Elevate your game with tozyer.">
+
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gg-sun.in/">
+    <meta property="og:title" content="GGSUN Official">
+    <meta property="og:description" content="The ultimate betting experience. Pro-level tools and a full demo version by gg-sun. Elevate your game with tozyer.">
+    <meta property="og:image" content="favicon.png">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://gg-sun.in/">
+    <meta property="twitter:title" content="GGSUN Official">
+    <meta property="twitter:description" content="The ultimate betting experience. Pro-level tools and a full demo version by gg-sun. Elevate your game with tozyer.">
+    <meta property="twitter:image" content="favicon.png">
     
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -54,7 +70,7 @@
             background: var(--white);
             color: var(--primary-orange);
             padding: 20px 30px;
-            border-radius: 15px; /* Smooth Square */
+            border-radius: 15px;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -155,6 +171,11 @@
             border: 1px solid rgba(255, 107, 0, 0.1);
         }
 
+        .ver-badge a {
+            color: inherit;
+            text-decoration: none;
+        }
+
         h1 {
             font-size: 4.5rem;
             line-height: 1;
@@ -189,6 +210,12 @@
         .metric-item b { display: block; font-size: 1.5rem; margin-bottom: 5px; color: var(--primary-orange); }
         .metric-item span { color: var(--slate); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
 
+        .btn-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
         .btn-main {
             background: var(--primary-orange);
             color: white;
@@ -207,12 +234,31 @@
             outline: none;
         }
 
+        .btn-trial {
+            background: var(--primary-orange);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 4px solid #C2410C;
+            transition: all 0.2s;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            outline: none;
+        }
+
         @keyframes shimmer {
             0% { transform: translateX(-100%) rotate(45deg); }
             100% { transform: translateX(100%) rotate(45deg); }
         }
 
-        .btn-main::after, .star-btn::after {
+        .btn-main::after, .btn-trial::after, .star-btn::after {
             content: "";
             position: absolute;
             top: -50%;
@@ -224,7 +270,7 @@
             animation: shimmer 3s infinite;
         }
 
-        .btn-main:active {
+        .btn-main:active, .btn-trial:active {
             transform: translateY(3px);
             border-bottom-width: 2px;
         }
@@ -271,6 +317,7 @@
             .hero-container { flex-direction: column; margin: 20px; padding: 30px; transform: none !important; }
             h1 { font-size: 3rem; }
             .icon-box { width: 180px; height: 180px; font-size: 70px; }
+            .btn-row { flex-direction: column; align-items: flex-start; }
         }
     </style>
 </head>
@@ -292,7 +339,11 @@
     </div>
 
     <div class="hero-content">
-        <div class="ver-badge"><i class="fas fa-shield-halved"></i> Version 1.0.0</div>
+        <div class="ver-badge"><i class="fas fa-shield-halved"></i>Latest Version 1.0.1</div>
+        <div class="ver-badge">
+            <i class="fas fa-shield-halved"></i>
+            <a href="https://gg-sun.in/versions">Old Version >click<</a>
+        </div>
         <h1>Tozyer</h1>
         <p class="dev-info">Developed by <b>Sunam Sarkar</b> • GGSUN Enterprise</p>
 
@@ -302,19 +353,25 @@
                 <span>Rating</span>
             </div>
             <div class="metric-item">
-                <b>40 MB</b>
+                <b>36 MB</b>
                 <span>Size</span>
             </div>
             <div class="metric-item">
-                <b>17+</b>
+                <b>16+</b>
                 <span>Users</span>
             </div>
         </div>
 
-        <div class="btn-row">
-            <a href="https://www.mediafire.com/file/6tt58n1nddl641n/Tozyer_1.0.0.apk/file?dkey=8k24m896tqa&r=981" class="btn-main">
-                <i class="fas fa-cloud-arrow-down"></i> DOWNLOAD APK
-            </a>
+        <div class="btn-action-area">
+            <div class="btn-row">
+                <a href="https://www.mediafire.com/file/6tt58n1nddl641n/Tozyer_1.0.0.apk/file?dkey=8k24m896tqa&r=981" class="btn-main">
+                    <i class="fas fa-cloud-arrow-down"></i> DOWNLOAD APK
+                </a>
+                
+                <a href="https://gg-sun.in/trial" class="btn-trial">
+                    <i class="fas fa-bolt"></i> TRIAL
+                </a>
+            </div>
 
             <div class="rating-container" style="margin-top: 30px;">
                 <span style="font-size: 0.8rem; font-weight: 800; color: var(--slate);">USER EXPERIENCE RATING</span>
