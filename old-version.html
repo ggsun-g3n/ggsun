@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Old Version</title>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: radial-gradient(circle at top right, #fdfcfb 0%, #e2d1c3 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #2d3436;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px 30px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            text-align: center;
+            width: 100%;
+            max-width: 420px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .app-logo {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(145deg, #FF8C00, #e67e00);
+            border-radius: 22px;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 45px;
+            color: white;
+            font-weight: 800;
+            box-shadow: 0 10px 20px rgba(255, 140, 0, 0.25);
+            letter-spacing: -2px;
+            animation: logoPulse 2s infinite ease-in-out;
+        }
+
+        @keyframes logoPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        h1 { 
+            margin: 0 0 10px 0; 
+            font-size: 26px; 
+            font-weight: 700;
+            color: #1a1a1a;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: #636e72;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .version-card {
+            background: #ffffff;
+            border: 1.5px solid #f1f2f6;
+            border-radius: 18px;
+            padding: 24px;
+            margin-bottom: 15px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .version-card:hover {
+            border-color: #f1f2f6;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+        }
+
+        .version-tag {
+            font-weight: 600;
+            color: #2d3436;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .latest { 
+            border: 1.5px solid #f1f2f6; 
+            background: linear-gradient(to bottom, #ffffff, #fffaf5);
+        }
+
+        .badge {
+            background: #FF8C00;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .btn-3d {
+            display: block;
+            position: relative;
+            background: #FF8C00;
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 12px;
+            box-shadow: 0 5px 0 #cc7000;
+            transition: all 0.1s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+            overflow: hidden;
+        }
+
+        .btn-3d::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: rotate(30deg);
+            transition: none;
+            animation: chamkila 3s infinite;
+        }
+
+        @keyframes chamkila {
+            0% { left: -60%; }
+            20% { left: 120%; }
+            100% { left: 120%; }
+        }
+
+        .btn-3d:focus {
+            outline: none;
+        }
+
+        .btn-3d:hover {
+            background: #ffa033;
+        }
+
+        .btn-3d:active {
+            box-shadow: 0 2px 0 #cc7000;
+            transform: translateY(3px);
+            outline: none;
+        }
+
+        .old-btn {
+            background: #f1f2f6;
+            color: #4b4b4b;
+            box-shadow: 0 5px 0 #ced6e0;
+        }
+
+        .old-btn::after {
+            display: none;
+        }
+
+        .old-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .old-btn:active {
+            box-shadow: 0 2px 0 #ced6e0;
+        }
+
+        .footer-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 25px;
+            font-size: 13px;
+            color: #a4b0be;
+        }
+
+        .security-icon {
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="app-logo">T</div>
+    
+    <h1>Tozyer APK</h1>
+    <p class="subtitle">𝙻𝚊𝚝𝚎𝚜𝚝 𝚏𝚘𝚛 𝚏𝚎𝚊𝚝𝚞𝚛𝚎𝚜/𝚜𝚎𝚌𝚞𝚛𝚒𝚝𝚢; 𝙾𝚕𝚍 𝚏𝚘𝚛 𝚌𝚘𝚖𝚙𝚊𝚝𝚒𝚋𝚒𝚕𝚒𝚝𝚢</p>
+
+    <div class="version-card latest">
+        <div class="version-tag">
+            Latest Release <span class="badge">V1.0.1</span>
+        </div>
+        <a href="https://www.mediafire.com/file/cto0j9t48t0hdzr/Tozyer_1.0.1.apk/file?dkey=ynisvqys4gb&r=1831" class="btn-3d">Download Now</a>
+    </div>
+
+    <div style="height: 1px; background: #eee; margin: 25px 0; position: relative;">
+        <span style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #fff; padding: 0 15px; color: #ccc; font-size: 12px;">OR</span>
+    </div>
+
+    <div class="version-card">
+        <div class="version-tag" style="color: #888;">
+            Old Version <span style="font-weight: 400; margin-left: 5px;">(V1.0.0)</span>
+        </div>
+        <a href="https://www.mediafire.com/file/6tt58n1nddl641n/Tozyer_1.0.0.apk/file?dkey=x9id5yrkm5h&r=1262" class="btn-3d old-btn">DOWNLOAD</a>
+    </div>
+
+    <div class="footer-info">
+        <svg class="security-icon" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.775 11.775 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.158 7.158 0 0 0 1.048-.625 11.777 11.777 0 0 0 2.517-2.453c1.678-2.195 2.461-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm0 5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/>
+        </svg>
+        Safe & Secure Download
+    </div>
+</div>
+
+</body>
+</html>
