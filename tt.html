@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +28,7 @@
             color: #333;
             display: flex;
             flex-direction: column;
-            justify-content: center; 
+            justify-content: center;
             outline: none;
             box-shadow: 0 0 40px rgba(255, 106, 0, 0.1);
             border-left: 1px solid rgba(255, 255, 255, 0.5);
@@ -119,7 +120,8 @@
             will-change: transform;
         }
 
-        .card::after, .timer-box::after {
+        .card::after,
+        .timer-box::after {
             content: "";
             position: absolute;
             top: -50%;
@@ -131,18 +133,42 @@
             animation: shine 5s infinite linear;
         }
 
-        #days::after { animation-delay: 0s; }
-        #hours::after { animation-delay: 0.5s; }
-        #mins::after { animation-delay: 1s; }
+        #days::after {
+            animation-delay: 0s;
+        }
 
-        .card:nth-child(1)::after { animation-delay: 1.5s; }
-        .card:nth-child(2)::after { animation-delay: 2s; }
-        .card:nth-child(3)::after { animation-delay: 2.5s; }
+        #hours::after {
+            animation-delay: 0.5s;
+        }
+
+        #mins::after {
+            animation-delay: 1s;
+        }
+
+        .card:nth-child(1)::after {
+            animation-delay: 1.5s;
+        }
+
+        .card:nth-child(2)::after {
+            animation-delay: 2s;
+        }
+
+        .card:nth-child(3)::after {
+            animation-delay: 2.5s;
+        }
 
         @keyframes shine {
-            0% { left: -150%; }
-            15% { left: 150%; }
-            100% { left: 150%; }
+            0% {
+                left: -150%;
+            }
+
+            15% {
+                left: 150%;
+            }
+
+            100% {
+                left: 150%;
+            }
         }
 
         .card:active {
@@ -159,7 +185,7 @@
         .card.revealed {
             background: #ffffff;
             transform: rotateY(180deg);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
             border: 2px solid #fff0e0;
         }
 
@@ -177,7 +203,7 @@
         }
 
         .question-mark {
-            text-shadow: 0 3px 6px rgba(0,0,0,0.15);
+            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
             font-weight: bold;
         }
 
@@ -209,92 +235,96 @@
         }
     </style>
 </head>
+
 <body>
 
-<div class="container">
-    <div class="event-title">TOZYER LIMITED EVENT</div>
-    
-    <p class="instruction-text">Tap a card to reveal your prize! <br><span class="highlight-text">Mystery Prize</span></p>
+    <div class="container">
+        <div class="event-title">TOZYER LIMITED EVENT</div>
 
-    <div class="timer-container">
-        <div class="timer-wrapper"><span id="days" class="timer-box">00</span><span class="timer-label">DAYS</span></div>
-        <div class="timer-wrapper"><span id="hours" class="timer-box">00</span><span class="timer-label">HOURS</span></div>
-        <div class="timer-wrapper"><span id="mins" class="timer-box">00</span><span class="timer-label">MINS</span></div>
+        <p class="instruction-text">Tap a card to reveal your prize! <br><span class="highlight-text">Mystery Prize</span></p>
+
+        <div class="timer-container">
+            <div class="timer-wrapper"><span id="days" class="timer-box">00</span><span class="timer-label">DAYS</span></div>
+            <div class="timer-wrapper"><span id="hours" class="timer-box">00</span><span class="timer-label">HOURS</span></div>
+            <div class="timer-wrapper"><span id="mins" class="timer-box">00</span><span class="timer-label">MINS</span></div>
+        </div>
+
+        <div class="cards-row" id="cardContainer">
+            <div class="card" onclick="scratchCard(this, 0)">
+                <span class="question-mark">ꕥ</span>
+                <img src="https://gg-sun.in/reward.png" alt="Reward" class="reward-img">
+            </div>
+            <div class="card" onclick="scratchCard(this, 1)">
+                <span class="question-mark">ꕥ</span>
+                <img src="https://gg-sun.in/reward.png" alt="Reward" class="reward-img">
+            </div>
+            <div class="card" onclick="scratchCard(this, 2)">
+                <span class="question-mark">ꕥ</span>
+                <img src="https://gg-sun.in/reward.png" alt="Reward" class="reward-img">
+            </div>
+        </div>
     </div>
 
-    <div class="cards-row" id="cardContainer">
-        <div class="card" onclick="scratchCard(this, 0)">
-            <span class="question-mark">ꕥ</span>
-            <img src="https://gg-sun.in/reward.png" alt="Reward" class="reward-img">
-        </div>
-        <div class="card" onclick="scratchCard(this, 1)">
-            <span class="question-mark">ꕥ</span>
-            <img src="https://gg-sun.in/reward.png" alt="Reward" class="reward-img">
-        </div>
-        <div class="card" onclick="scratchCard(this, 2)">
-            <span class="question-mark">ꕥ</span>
-            <img src="https://gg-sun.in/reward.png" alt="Reward" class="reward-img">
-        </div>
-    </div>
-</div>
+    <div id="notification">Congratulations! You won the Mystery Prize!</div>
 
-<div id="notification">Congratulations! You won the Mystery Prize!</div>
+    <script>
+        let hasScratched = false;
 
-<script>
-    let hasScratched = false;
-
-    window.onload = function() {
-        updateTimer();
-        const savedChoice = localStorage.getItem('userPrizeChoice');
-        if (savedChoice !== null) {
-            renderRevealedCards(parseInt(savedChoice));
-        }
-    }
-
-    function scratchCard(element, index) {
-        if (hasScratched || localStorage.getItem('userPrizeChoice') !== null) return;
-        localStorage.setItem('userPrizeChoice', index);
-        renderRevealedCards(index);
-    }
-
-    function renderRevealedCards(selectedIndex) {
-        hasScratched = true;
-        const allCards = document.querySelectorAll('.card');
-        const allImages = document.querySelectorAll('.reward-img');
-
-        allCards.forEach((card, i) => {
-            card.classList.add('revealed');
-            if (i === selectedIndex) {
-                allImages[i].src = 'https://gg-sun.in/reward.png';
-            } else {
-                allImages[i].src = 'https://gg-sun.in/blank.png';
+        window.onload = function() {
+            updateTimer();
+            const savedChoice = localStorage.getItem('userPrizeChoice');
+            if (savedChoice !== null) {
+                renderRevealedCards(parseInt(savedChoice));
             }
-        });
+        }
 
-        setTimeout(() => {
-            const notify = document.getElementById('notification');
-            notify.classList.add('show');
-            setTimeout(() => { notify.classList.remove('show'); }, 3000);
-        }, 800);
-    }
+        function scratchCard(element, index) {
+            if (hasScratched || localStorage.getItem('userPrizeChoice') !== null) return;
+            localStorage.setItem('userPrizeChoice', index);
+            renderRevealedCards(index);
+        }
 
-    function updateTimer() {
-        const now = new Date();
-        let nextSunday = new Date();
-        nextSunday.setDate(now.getDate() + (7 - now.getDay()) % 7);
-        nextSunday.setHours(0, 0, 0, 0);
-        if (now >= nextSunday) nextSunday.setDate(nextSunday.getDate() + 7);
-        const diff = nextSunday - now;
-        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const m = Math.floor((diff / (1000 * 60)) % 60);
-        document.getElementById('days').innerText = d.toString().padStart(2, '0');
-        document.getElementById('hours').innerText = h.toString().padStart(2, '0');
-        document.getElementById('mins').innerText = m.toString().padStart(2, '0');
-    }
+        function renderRevealedCards(selectedIndex) {
+            hasScratched = true;
+            const allCards = document.querySelectorAll('.card');
+            const allImages = document.querySelectorAll('.reward-img');
 
-    setInterval(updateTimer, 60000);
-</script>
+            allCards.forEach((card, i) => {
+                card.classList.add('revealed');
+                if (i === selectedIndex) {
+                    allImages[i].src = 'https://gg-sun.in/reward.png';
+                } else {
+                    allImages[i].src = 'https://gg-sun.in/blank.png';
+                }
+            });
+
+            setTimeout(() => {
+                const notify = document.getElementById('notification');
+                notify.classList.add('show');
+                setTimeout(() => {
+                    notify.classList.remove('show');
+                }, 3000);
+            }, 800);
+        }
+
+        function updateTimer() {
+            const now = new Date();
+            let nextSunday = new Date();
+            nextSunday.setDate(now.getDate() + (7 - now.getDay()) % 7);
+            nextSunday.setHours(0, 0, 0, 0);
+            if (now >= nextSunday) nextSunday.setDate(nextSunday.getDate() + 7);
+            const diff = nextSunday - now;
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const m = Math.floor((diff / (1000 * 60)) % 60);
+            document.getElementById('days').innerText = d.toString().padStart(2, '0');
+            document.getElementById('hours').innerText = h.toString().padStart(2, '0');
+            document.getElementById('mins').innerText = m.toString().padStart(2, '0');
+        }
+
+        setInterval(updateTimer, 60000);
+    </script>
 
 </body>
+
 </html>
