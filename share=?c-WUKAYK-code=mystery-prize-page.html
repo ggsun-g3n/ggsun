@@ -119,7 +119,6 @@
             will-change: transform;
         }
 
-        /* Shine Base Animation */
         .card::after, .timer-box::after {
             content: "";
             position: absolute;
@@ -132,7 +131,6 @@
             animation: shine 5s infinite linear;
         }
 
-        /* Alag-alag timing for elements (Staggered) */
         #days::after { animation-delay: 0s; }
         #hours::after { animation-delay: 0.5s; }
         #mins::after { animation-delay: 1s; }
@@ -227,15 +225,15 @@
     <div class="cards-row" id="cardContainer">
         <div class="card" onclick="scratchCard(this, 0)">
             <span class="question-mark">ꕥ</span>
-            <img src="gg-sun.in/reward.png" alt="Reward" class="reward-img">
+            <img src="https://gg-sun.in/reward.png" alt="Reward" class="reward-img">
         </div>
         <div class="card" onclick="scratchCard(this, 1)">
             <span class="question-mark">ꕥ</span>
-            <img src="gg-sun.in/reward.png" alt="Reward" class="reward-img">
+            <img src="https://gg-sun.in/reward.png" alt="Reward" class="reward-img">
         </div>
         <div class="card" onclick="scratchCard(this, 2)">
             <span class="question-mark">ꕥ</span>
-            <img src="gg-sun.in/reward.png" alt="Reward" class="reward-img">
+            <img src="https://gg-sun.in/reward.png" alt="Reward" class="reward-img">
         </div>
     </div>
 </div>
@@ -267,9 +265,9 @@
         allCards.forEach((card, i) => {
             card.classList.add('revealed');
             if (i === selectedIndex) {
-                allImages[i].src = 'gg-sun.in/reward.png';
+                allImages[i].src = 'https://gg-sun.in/reward.png';
             } else {
-                allImages[i].src = 'gg-sun.in/gg-sun.in/blank.png';
+                allImages[i].src = 'https://gg-sun.in/blank.png';
             }
         });
 
