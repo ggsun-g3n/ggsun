@@ -111,6 +111,8 @@
             transition: all 0.1s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .btn-3d:hover {
@@ -120,7 +122,13 @@
         .btn-3d:active {
             box-shadow: 0 2px 0 #cc7000;
             transform: translateY(3px);
+            outline: none;
         }
+
+        .btn-3d:focus {
+            outline: none;
+        }
+
         .old-btn {
             background: #f1f2f6;
             color: #4b4b4b;
