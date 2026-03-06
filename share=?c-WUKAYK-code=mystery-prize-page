@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystery Prize Page</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: radial-gradient(circle at center, #ffffff 0%, #fff0e0 50%, #ffedd5 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.9);
+            min-height: 100vh;
+            text-align: center;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            outline: none;
+            box-shadow: 0 0 40px rgba(255, 106, 0, 0.1);
+            border-left: 1px solid rgba(255, 255, 255, 0.5);
+            border-right: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+        }
+
+        .event-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #e65c00;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .instruction-text {
+            font-weight: 500;
+            margin-bottom: 30px;
+            color: #666;
+            padding: 0 20px;
+        }
+
+        .highlight-text {
+            color: #ff6a00;
+            font-weight: 800;
+            border-bottom: 2px solid #ff6a00;
+        }
+
+        .timer-container {
+            margin-bottom: 50px;
+        }
+
+        .timer-box {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff8c00 0%, #ff5e00 100%);
+            color: #ffffff;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1.4rem;
+            margin: 0 4px;
+            min-width: 40px;
+            box-shadow: 0 6px 15px rgba(255, 94, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            will-change: transform;
+        }
+
+        .timer-label {
+            font-size: 0.7rem;
+            display: block;
+            margin-top: 10px;
+            color: #999;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .timer-wrapper {
+            display: inline-block;
+            margin: 0 5px;
+        }
+
+        .cards-row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 0 20px;
+            perspective: 1000px;
+        }
+
+        .card {
+            flex: 1;
+            aspect-ratio: 3/4;
+            background: linear-gradient(145deg, #ff9d2e, #ff6a00);
+            border: none;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            color: #ffffff;
+            box-shadow: 0 15px 30px rgba(255, 106, 0, 0.25);
+            cursor: pointer;
+            transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+            will-change: transform;
+        }
+
+        .card::after,
+        .timer-box::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -150%;
+            width: 60%;
+            height: 200%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transform: rotate(30deg);
+            animation: shine 5s infinite linear;
+        }
+
+        #days::after {
+            animation-delay: 0s;
+        }
+
+        #hours::after {
+            animation-delay: 0.5s;
+        }
+
+        #mins::after {
+            animation-delay: 1s;
+        }
+
+        .card:nth-child(1)::after {
+            animation-delay: 1.5s;
+        }
+
+        .card:nth-child(2)::after {
+            animation-delay: 2s;
+        }
+
+        .card:nth-child(3)::after {
+            animation-delay: 2.5s;
+        }
+
+        @keyframes shine {
+            0% {
+                left: -150%;
+            }
+
+            15% {
+                left: 150%;
+            }
+
+            100% {
+                left: 150%;
+            }
+        }
+
+        .card:active {
+            transform: scale(0.95);
+        }
+
+        .card img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+            display: none;
+        }
+
+        .card.revealed {
+            background: #ffffff;
+            transform: rotateY(180deg);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            border: 2px solid #fff0e0;
+        }
+
+        .card.revealed::after {
+            display: none;
+        }
+
+        .card.revealed img {
+            display: block;
+            transform: rotateY(180deg);
+        }
+
+        .card.revealed .question-mark {
+            display: none;
+        }
+
+        .question-mark {
+            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+            font-weight: bold;
+        }
+
+        #notification {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff6a00;
+            color: #ffffff;
+            padding: 18px 35px;
+            border-radius: 50px;
+            font-weight: 700;
+            box-shadow: 0 10px 25px rgba(255, 106, 0, 0.4);
+            transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+            white-space: nowrap;
+            border: none;
+            will-change: bottom;
+        }
+
+        #notification.show {
+            bottom: 40px;
+        }
+
+        * {
+            -webkit-tap-highlight-color: transparent !important;
+            outline: none !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="event-title">TOZYER LIMITED EVENT</div>
+
+        <p class="instruction-text">Tap a card to reveal your prize! <br><span class="highlight-text">Mystery Prize</span></p>
+
+        <div class="timer-container">
+            <div class="timer-wrapper"><span id="days" class="timer-box">00</span><span class="timer-label">DAYS</span></div>
+            <div class="timer-wrapper"><span id="hours" class="timer-box">00</span><span class="timer-label">HOURS</span></div>
+            <div class="timer-wrapper"><span id="mins" class="timer-box">00</span><span class="timer-label">MINS</span></div>
+        </div>
+
+        <div class="cards-row" id="cardContainer">
+            <div class="card" onclick="scratchCard(this, 0)">
+                <span class="question-mark">ꕥ</span>
+                <img src="https://gg-sun.in/reward.png" alt="Reward" class="reward-img">
+            </div>
+            <div class="card" onclick="scratchCard(this, 1)">
+                <span class="question-mark">ꕥ</span>
+                <img src="https://gg-sun.in/reward.png" alt="Reward" class="reward-img">
+            </div>
+            <div class="card" onclick="scratchCard(this, 2)">
+                <span class="question-mark">ꕥ</span>
+                <img src="https://gg-sun.in/reward.png" alt="Reward" class="reward-img">
+            </div>
+        </div>
+    </div>
+
+    <div id="notification">Congratulations! You won the Mystery Prize!</div>
+
+    <script>
+        let hasScratched = false;
+
+        window.onload = function() {
+            updateTimer();
+            const savedChoice = localStorage.getItem('userPrizeChoice');
+            if (savedChoice !== null) {
+                renderRevealedCards(parseInt(savedChoice));
+            }
+        }
+
+        function scratchCard(element, index) {
+            if (hasScratched || localStorage.getItem('userPrizeChoice') !== null) return;
+            localStorage.setItem('userPrizeChoice', index);
+            renderRevealedCards(index);
+        }
+
+        function renderRevealedCards(selectedIndex) {
+            hasScratched = true;
+            const allCards = document.querySelectorAll('.card');
+            const allImages = document.querySelectorAll('.reward-img');
+
+            allCards.forEach((card, i) => {
+                card.classList.add('revealed');
+                if (i === selectedIndex) {
+                    allImages[i].src = 'https://gg-sun.in/reward.png';
+                } else {
+                    allImages[i].src = 'https://gg-sun.in/blank.png';
+                }
+            });
+
+            setTimeout(() => {
+                const notify = document.getElementById('notification');
+                notify.classList.add('show');
+                setTimeout(() => {
+                    notify.classList.remove('show');
+                }, 3000);
+            }, 800);
+        }
+
+        function updateTimer() {
+            const now = new Date();
+            let nextSunday = new Date();
+            nextSunday.setDate(now.getDate() + (7 - now.getDay()) % 7);
+            nextSunday.setHours(0, 0, 0, 0);
+            if (now >= nextSunday) nextSunday.setDate(nextSunday.getDate() + 7);
+            const diff = nextSunday - now;
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const m = Math.floor((diff / (1000 * 60)) % 60);
+            document.getElementById('days').innerText = d.toString().padStart(2, '0');
+            document.getElementById('hours').innerText = h.toString().padStart(2, '0');
+            document.getElementById('mins').innerText = m.toString().padStart(2, '0');
+        }
+
+        setInterval(updateTimer, 60000);
+    </script>
+
+</body>
+
+</html>
