@@ -1,32 +1,137 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Direct link</title>
-    
-    <!-- Meta Refresh for Instant Redirect -->
-    <meta http-equiv="refresh" content="0; url=https://www.mediafire.com/file/nwzyvd8pw380xth/%2528g%2529h-panel_1.0.6beta.apk/file?dkey=km3ya215hw5&r=546">
-    
-    <!-- JavaScript Fallback (In case meta refresh fails) -->
-    <script type="text/javascript">
-        window.location.href = "https://www.mediafire.com/file/nwzyvd8pw380xth/%2528g%2529h-panel_1.0.6beta.apk/file?dkey=km3ya215hw5&r=546";
-    </script>
-
+    <title>G-Panel Downloads</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            background-color: #ffffff;
+            background: linear-gradient(135deg, #ffffff 50%, #fff3e0 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
             overflow: hidden;
+
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border-top: 8px solid #ff9800;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+        }
+
+        .logo-container {
+            margin-bottom: 20px;
+            margin-top: -10px;
+        }
+
+        .main-logo {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            -webkit-user-drag: none;
+            user-select: none;
+        }
+
+        h2 {
+            color: #e65100;
+            margin-bottom: 25px;
+            margin-top: 0;
+            font-size: 24px;
+        }
+
+        .download-section {
+            margin-bottom: 25px;
+        }
+
+        .file-name {
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 10px;
+            display: block;
+            font-size: 14px;
+        }
+
+        .btn-3d {
+            display: inline-block;
+            text-decoration: none;
+            background: #ff9800;
+            color: white;
+            padding: 15px 30px;
+            font-weight: bold;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 6px #ef6c00;
+            transition: all 0.1s ease;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .btn-3d:active {
+            box-shadow: 0 0px #ef6c00;
+            transform: translateY(4px);
+        }
+
+        .btn-3d:hover {
+            background: #ffa726;
+        }
+
+        * {
+            cursor: default;
+        }
+
+        .btn-3d,
+        .main-logo {
+            cursor: pointer;
         }
     </style>
 </head>
-<body>
-    <!-- Screen is empty as requested -->
+
+<body oncontextmenu="return false;">
+    <div class="container">
+        <div class="logo-container">
+            <img src="https://gg-sun.in/favicon.png" alt="Logo" class="main-logo">
+        </div>
+
+        <h2>〈G〉H-Panel</h2>
+
+        <div class="download-section">
+            <span class="file-name"></span>
+            <a href="https://www.mediafire.com/file/gf2f21xfhm8bxhv/%25E3%2580%2588G%25E3%2580%2589H-Panel%25E1%25B5%2596%25E1%25B6%259C_1.0.6beta.apk/file" class="btn-3d">Download PC Version</a>
+        </div>
+
+        <hr style="border: 0.5px solid #eee; margin: 25px 0;">
+
+        <div class="download-section">
+            <span class="file-name"></span>
+            <a href="https://www.mediafire.com/file/1hodi4esmr4vlkv/%25E3%2580%2588G%25E3%2580%2589H-Panel%25E1%25B5%2590%25E1%25B5%2592%25E1%25B5%2587_1.0.6beta.apk/file?dkey=x5tet48hyug&r=266" class="btn-3d" style="background: #fb8c00; box-shadow: 0 6px #e65100;">Download Mobile Version</a>
+        </div>
+    </div>
+
+    <script>
+        document.onkeydown = function(e) {
+            if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 85 || e.keyCode === 83 || e.keyCode === 73)) {
+                return false;
+            }
+        };
+    </script>
+
 </body>
+
 </html>
