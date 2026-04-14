@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Timeline Counter</title>
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body, html {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ffffff;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            overflow: hidden;
+        }
+
+        .main-container {
+            text-align: center;
+            background: #fff;
+            padding: 50px 80px;
+            border-radius: 40px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.05);
+            border-left: 15px solid #ff9800;
+        }
+
+        #counter-display {
+            font-size: 22vw;
+            font-weight: 900;
+            color: #fb8c00;
+            transition: color 0.4s ease, transform 0.4s ease;
+            user-select: none;
+        }
+
+        .system-off {
+            color: #d32f2f !important;
+            text-shadow: 0 10px 40px rgba(211, 47, 47, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div id="counter-display">0</div>
+    </div>
+
+    <script>
+        const CONFIG = {
+            startValue: 0,
+            endValue: 10000,
+            increment: 4,
+            startDate: "2026-04-14", 
+            startTime: "12:00",
+            endDate: "2026-04-14", 
+            endTime: "20:00",
+            isEnabled: true,
+            offDisplayNumber: 0
+        };
+
+        const display = document.getElementById('counter-display');
+
+        function updateCounter() {
+            const now = new Date();
+            const start = new Date(`${CONFIG.startDate}T${CONFIG.startTime}`);
+            const end = new Date(`${CONFIG.endDate}T${CONFIG.endTime}`);
+
+            if (!CONFIG.isEnabled) {
+                display.innerText = CONFIG.offDisplayNumber;
+                display.classList.add('system-off');
+                return;
+            }
+
+            if (now < start) {
+                display.innerText = CONFIG.startValue.toLocaleString();
+                return;
+            }
+
+            if (now >= end) {
+                display.innerText = CONFIG.endValue.toLocaleString();
+                return;
+            }
+
+            const totalDuration = end - start;
+            const timePassed = now - start;
+            const progressPercent = timePassed / totalDuration;
+
+            const totalRange = CONFIG.endValue - CONFIG.startValue;
+            let currentNumber = CONFIG.startValue + (totalRange * progressPercent);
+
+            currentNumber = Math.floor(currentNumber / CONFIG.increment) * CONFIG.increment;
+
+            if (currentNumber > CONFIG.endValue) currentNumber = CONFIG.endValue;
+
+            display.innerText = currentNumber.toLocaleString();
+        }
+
+        setInterval(updateCounter, 1000);
+        updateCounter();
+    </script>
+</body>
+</html>
