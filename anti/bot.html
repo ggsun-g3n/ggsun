@@ -1,1 +1,116 @@
-hi
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tozyer - Access Denied</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+      :root {
+            --bg-black: #0a0a0c;
+            --card-dark: #121215;
+            --box-grey: #1c1c21;
+            --border-grey: #27272a;
+            --text-white: #ffffff;
+            --text-grey: #a1a1aa;
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box;
+            -webkit-user-select: none; 
+            -ms-user-select: none; 
+            user-select: none; 
+            -webkit-tap-highlight-color: transparent; 
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: radial-gradient(circle at top, #18181b, var(--bg-black));
+            color: var(--text-white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 10px;
+        }
+
+        .hero-container {
+            max-width: 480px;
+            margin: auto;
+            padding: 24px 18px;
+            background: var(--card-dark);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--border-grey);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        /* --- Notice Section --- */
+        .notice-section {
+            text-align: center;
+            background: var(--box-grey);
+            padding: 28px 18px;
+            border-radius: 14px;
+            border: 1px solid var(--border-grey);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .notice-icon {
+            font-size: 2.8rem;
+            color: var(--text-white);
+            margin-bottom: 4px;
+        }
+
+        .notice-section h2 {
+            color: var(--text-white);
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .notice-section p {
+            color: var(--text-grey);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        footer {
+            padding: 15px 10px;
+            text-align: center;
+            color: var(--text-grey);
+            font-size: 0.75rem;
+            width: 100%;
+        }
+    </style>
+  </head>
+  <body oncontextmenu="return false;">
+
+    <div class="hero-container">
+      <div class="notice-section">
+        <i class="fas fa-robot notice-icon"></i>
+        <h2>Bot Detected</h2>
+        <p>Automated activity or suspicious traffic was detected from your connection. Access has been restricted to protect our services.</p>
+      </div>
+    </div>
+
+    <footer>
+      <p>
+        Copyright © 2025-2026 Tozyer
+        <br />
+        All rights reserved.
+      </p>
+    </footer>
+
+  </body>
+</html>
