@@ -1,1 +1,303 @@
-hi
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GGSUN Official</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+      :root {
+            --primary-orange: #FF6B00;
+            --dark-accent: #431407;
+            --slate: #71717a;
+            --white: #FFFFFF;
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box;
+            -webkit-user-select: none; 
+            -ms-user-select: none; 
+            user-select: none; 
+            -webkit-tap-highlight-color: transparent; 
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: radial-gradient(circle at top right, #FFFFFF, #FFEDD5);
+            color: var(--dark-accent);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            overflow-x: hidden;
+            perspective: 1000px;
+        }
+
+        .notification {
+            position: fixed;
+            top: -120px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--white);
+            color: var(--primary-orange);
+            padding: 15px 25px;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 700;
+            border: 1px solid rgba(255, 107, 0, 0.1);
+            width: 90%;
+            max-width: 350px;
+            justify-content: center;
+        }
+
+        .notification.show {
+            top: 20px;
+        }
+
+        .hero-container {
+            max-width: 700px; /* Thoda wide kiya policy ke liye */
+            margin: 40px auto;
+            padding: 40px 25px;
+            background: var(--white);
+            border-radius: 30px;
+            box-shadow: 20px 20px 60px rgba(255, 107, 0, 0.05);
+            border: 1px solid #FFF7ED;
+            width: 90%;
+            transition: transform 0.1s ease-out;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* --- Privacy Policy Section --- */
+        .policy-section {
+            text-align: left;
+            background: #fafafa;
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid #e4e4e7;
+        }
+
+        .policy-section h2 {
+            color: #000000;
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 800;
+        }
+
+        .policy-section h3 {
+            color: #111111;
+            font-size: 1.1rem;
+            margin-top: 18px;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .policy-section p {
+            color: #4b5563; /* Grey Tone */
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .policy-section a {
+            color: var(--primary-orange);
+            text-decoration: none;
+            font-weight: 700;
+        }
+        /* ----------------------------- */
+
+        .rating-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding-top: 20px;
+            border-top: 1px dashed #e4e4e7;
+        }
+
+        .star-group { 
+            display: flex; 
+            gap: 8px; 
+            justify-content: center; 
+        }
+
+        .star-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            border: 1px solid #FFEDD5;
+            background: white;
+            font-weight: 700;
+            color: var(--primary-orange);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .star-btn:not(.locked):hover {
+            background: #FFF7ED;
+            transform: translateY(-2px);
+        }
+
+        .star-btn.active {
+            background: var(--primary-orange);
+            color: white;
+            border-color: var(--primary-orange);
+        }
+
+        .star-btn.locked {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        footer {
+            padding: 30px 20px;
+            text-align: center;
+            color: var(--slate);
+            font-size: 0.8rem;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .hero-container { 
+                padding: 25px 20px;
+            }
+            .policy-section {
+                padding: 15px;
+            }
+        }
+    </style>
+  </head>
+  <body oncontextmenu="return false;">
+    <div id="notif" class="notification">
+      <i class="fas fa-star"></i>
+      <span id="notif-text">Rating saved!</span>
+    </div>
+
+    <div class="hero-container">
+      
+      <!-- Privacy Policy Section Starts -->
+      <div class="policy-section">
+        <h2>Privacy Policy</h2>
+        <p>Welcome! We value your privacy and want to be completely transparent about how we handle your data in a simple and direct way.</p>
+        
+        <h3>What Data We Collect & How</h3>
+        <p>We only collect your <strong>username</strong> and <strong>password</strong>. This data securely travels from our website to our Supabase database, and then to our Minecraft plugin.</p>
+
+        <h3>Why We Collect It</h3>
+        <p>We use this data strictly to verify your identity on our Minecraft server, ensuring the account belongs to a real human. This helps us safely whitelist your account and keep both our database and Minecraft server protected.</p>
+
+        <h3>Data Security</h3>
+        <p>Your security is our top priority. All passwords are <strong>Hash Encrypted</strong> before reaching the Minecraft server. This means they are completely hidden—not even our developers can see your password.</p>
+
+        <h3>Third-Party Services</h3>
+        <p>To keep things running smoothly, we use trusted and secure services: <strong>GitHub</strong> (for our website structure), <strong>Supabase</strong> (for our database), and <strong>Lordhost</strong> (for server hosting).</p>
+
+        <h3>Your Rights & Auto-Deletion</h3>
+        <p>You have full control and can change your own password at any time. To keep our database clean, if you do not play on the server for a period of 6 months to 1 year, your data will be automatically deleted.</p>
+
+        <h3>Children's Privacy</h3>
+        <p>Our system is highly protected. We intentionally do not collect any sensitive personal information, making it completely safe for younger players.</p>
+
+        <h3>Policy Updates</h3>
+        <p>If we ever make changes to this policy, we will directly notify you in our <a href="https://gg-sun.in/discord" target="_blank">Discord server</a>.</p>
+
+        <h3>Contact Us</h3>
+        <p>If you have any questions or need support, feel free to reach out to us at: <strong>+91 8537828719</strong>.</p>
+      </div>
+      <!-- Privacy Policy Section Ends -->
+
+      <div class="rating-container">
+        <span style="font-size: 0.85rem; font-weight: 800; color: var(--slate); letter-spacing: 1px;">RATE YOUR EXPERIENCE</span>
+        <div class="star-group" id="star-group">
+          <button class="star-btn" data-val="1" onclick="setRating(1)">1</button>
+          <button class="star-btn" data-val="2" onclick="setRating(2)">2</button>
+          <button class="star-btn" data-val="3" onclick="setRating(3)">3</button>
+          <button class="star-btn" data-val="4" onclick="setRating(4)">4</button>
+          <button class="star-btn" data-val="5" onclick="setRating(5)">5</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>
+        Copyright © 2025-2026 GGSUN
+        <br />
+        All rights reserved.
+      </p>
+    </footer>
+
+    <script>
+      let isLocked = false;
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const savedRating = localStorage.getItem('userRating');
+        if (savedRating) {
+            highlightStars(savedRating);
+            lockRating();
+        }
+      });
+
+      function showNotification(msg) {
+        const notif = document.getElementById('notif');
+        const notifText = document.getElementById('notif-text');
+        notifText.innerText = msg;
+        notif.classList.add('show');
+        
+        setTimeout(() => {
+            notif.classList.remove('show');
+        }, 3000);
+      }
+
+      function setRating(n) {
+        if (isLocked) {
+            showNotification("You have already rated!");
+            return;
+        }
+
+        localStorage.setItem('userRating', n);
+        highlightStars(n);
+        showNotification(`Rated ${n} stars! Thank you.`);
+        lockRating();
+      }
+
+      function highlightStars(n) {
+        const stars = document.querySelectorAll('.star-btn');
+        stars.forEach(star => {
+            star.classList.remove('active');
+            if (star.getAttribute('data-val') == n) {
+                star.classList.add('active');
+            }
+        });
+      }
+
+      function lockRating() {
+          isLocked = true;
+          const stars = document.querySelectorAll('.star-btn');
+          stars.forEach(star => {
+              star.classList.add('locked');
+          });
+      }
+
+      const card = document.querySelector('.hero-container');
+      document.addEventListener('mousemove', (e) => {
+        if(window.innerWidth > 900) {
+            let xAxis = (window.innerWidth / 2 - e.pageX) / 40; // Effect thoda smooth kiya
+            let yAxis = (window.innerHeight / 2 - e.pageY) / 40;
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        }
+      });
+    </script>
+  </body>
+</html>
