@@ -3,15 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GGSUN Official</title>
+    <title>Privacy Policy</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
       :root {
-            --primary-orange: #FF6B00;
-            --dark-accent: #431407;
-            --slate: #71717a;
-            --white: #FFFFFF;
+            --bg-black: #0a0a0c;
+            --card-dark: #121215;
+            --box-grey: #1c1c21;
+            --border-grey: #27272a;
+            --text-white: #ffffff;
+            --text-grey: #a1a1aa;
+            --btn-bg: #27272a;
         }
 
         * { 
@@ -26,105 +29,104 @@
 
         body {
             font-family: 'Outfit', sans-serif;
-            background: radial-gradient(circle at top right, #FFFFFF, #FFEDD5);
-            color: var(--dark-accent);
+            background: radial-gradient(circle at top, #18181b, var(--bg-black));
+            color: var(--text-white);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            overflow-x: hidden;
-            perspective: 1000px;
+            padding: 10px;
         }
 
         .notification {
             position: fixed;
-            top: -120px;
+            top: -100px;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--white);
-            color: var(--primary-orange);
-            padding: 15px 25px;
-            border-radius: 15px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            background: var(--box-grey);
+            color: var(--text-white);
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
             z-index: 1000;
-            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.4s ease;
             display: flex;
             align-items: center;
-            gap: 15px;
-            font-weight: 700;
-            border: 1px solid rgba(255, 107, 0, 0.1);
-            width: 90%;
-            max-width: 350px;
+            gap: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid var(--border-grey);
+            width: 85%;
+            max-width: 320px;
             justify-content: center;
         }
 
         .notification.show {
-            top: 20px;
+            top: 15px;
         }
 
         .hero-container {
-            max-width: 700px; /* Thoda wide kiya policy ke liye */
-            margin: 40px auto;
-            padding: 40px 25px;
-            background: var(--white);
-            border-radius: 30px;
-            box-shadow: 20px 20px 60px rgba(255, 107, 0, 0.05);
-            border: 1px solid #FFF7ED;
-            width: 90%;
-            transition: transform 0.1s ease-out;
+            max-width: 480px;
+            margin: 15px auto;
+            padding: 18px 15px;
+            background: var(--card-dark);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--border-grey);
+            width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 18px;
         }
 
         /* --- Privacy Policy Section --- */
         .policy-section {
             text-align: left;
-            background: #fafafa;
-            padding: 25px;
-            border-radius: 20px;
-            border: 1px solid #e4e4e7;
+            background: var(--box-grey);
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid var(--border-grey);
         }
 
         .policy-section h2 {
-            color: #000000;
-            font-size: 1.6rem;
-            margin-bottom: 20px;
+            color: var(--text-white);
+            font-size: 1.3rem;
+            margin-bottom: 12px;
             text-align: center;
             font-weight: 800;
+            letter-spacing: 0.5px;
         }
 
         .policy-section h3 {
-            color: #111111;
-            font-size: 1.1rem;
-            margin-top: 18px;
-            margin-bottom: 6px;
+            color: var(--text-white);
+            font-size: 0.95rem;
+            margin-top: 14px;
+            margin-bottom: 4px;
             font-weight: 700;
         }
 
         .policy-section p {
-            color: #4b5563; /* Grey Tone */
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 10px;
+            color: var(--text-grey);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 8px;
             font-weight: 400;
         }
 
         .policy-section a {
-            color: var(--primary-orange);
-            text-decoration: none;
-            font-weight: 700;
+            color: var(--text-white);
+            text-decoration: underline;
+            font-weight: 600;
         }
-        /* ----------------------------- */
 
         .rating-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
-            padding-top: 20px;
-            border-top: 1px dashed #e4e4e7;
+            gap: 10px;
+            padding-top: 14px;
+            border-top: 1px dashed var(--border-grey);
         }
 
         .star-group { 
@@ -134,48 +136,40 @@
         }
 
         .star-btn {
-            width: 45px;
-            height: 45px;
-            border-radius: 10px;
-            border: 1px solid #FFEDD5;
-            background: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            border: 1px solid var(--border-grey);
+            background: var(--btn-bg);
             font-weight: 700;
-            color: var(--primary-orange);
+            font-size: 0.9rem;
+            color: var(--text-grey);
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.2s ease;
         }
 
         .star-btn:not(.locked):hover {
-            background: #FFF7ED;
-            transform: translateY(-2px);
+            background: var(--text-grey);
+            color: var(--bg-black);
         }
 
         .star-btn.active {
-            background: var(--primary-orange);
-            color: white;
-            border-color: var(--primary-orange);
+            background: var(--text-white);
+            color: var(--bg-black);
+            border-color: var(--text-white);
         }
 
         .star-btn.locked {
             cursor: not-allowed;
-            opacity: 0.8;
+            opacity: 0.5;
         }
 
         footer {
-            padding: 30px 20px;
+            padding: 15px 10px;
             text-align: center;
-            color: var(--slate);
-            font-size: 0.8rem;
+            color: var(--text-grey);
+            font-size: 0.75rem;
             width: 100%;
-        }
-
-        @media (max-width: 768px) {
-            .hero-container { 
-                padding: 25px 20px;
-            }
-            .policy-section {
-                padding: 15px;
-            }
         }
     </style>
   </head>
@@ -202,7 +196,7 @@
         <p>Your security is our top priority. All passwords are <strong>Hash Encrypted</strong> before reaching the Minecraft server. This means they are completely hidden—not even our developers can see your password.</p>
 
         <h3>Third-Party Services</h3>
-        <p>To keep things running smoothly, we use trusted and secure services: <strong>GitHub</strong> (for our website structure), <strong>Supabase</strong> (for our database), and <strong>Lordhost</strong> (for server hosting).</p>
+        <p>To keep things running smoothly, we use trusted and secure services: <strong>GitHub</strong> (for our website structure) and <strong>Supabase</strong> (for our database).</p>
 
         <h3>Your Rights & Auto-Deletion</h3>
         <p>You have full control and can change your own password at any time. To keep our database clean, if you do not play on the server for a period of 6 months to 1 year, your data will be automatically deleted.</p>
@@ -219,7 +213,7 @@
       <!-- Privacy Policy Section Ends -->
 
       <div class="rating-container">
-        <span style="font-size: 0.85rem; font-weight: 800; color: var(--slate); letter-spacing: 1px;">RATE YOUR EXPERIENCE</span>
+        <span style="font-size: 0.75rem; font-weight: 800; color: var(--text-grey); letter-spacing: 1px;">RATE YOUR EXPERIENCE</span>
         <div class="star-group" id="star-group">
           <button class="star-btn" data-val="1" onclick="setRating(1)">1</button>
           <button class="star-btn" data-val="2" onclick="setRating(2)">2</button>
@@ -232,7 +226,7 @@
 
     <footer>
       <p>
-        Copyright © 2025-2026 GGSUN
+        Copyright © 2025-2026 Tozyer
         <br />
         All rights reserved.
       </p>
@@ -289,15 +283,6 @@
               star.classList.add('locked');
           });
       }
-
-      const card = document.querySelector('.hero-container');
-      document.addEventListener('mousemove', (e) => {
-        if(window.innerWidth > 900) {
-            let xAxis = (window.innerWidth / 2 - e.pageX) / 40; // Effect thoda smooth kiya
-            let yAxis = (window.innerHeight / 2 - e.pageY) / 40;
-            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-        }
-      });
     </script>
   </body>
 </html>
