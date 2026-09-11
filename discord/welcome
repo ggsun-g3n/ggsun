@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <script>
+    window.onload = function() {
+      // Direct Discord link open karne ke liye
+      window.open('https://discord.gg/Bys5K4FUT', '_blank');
+
+      // 2 second (2000ms) baad Privacy Policy page par redirect karne ke liye
+      setTimeout(function() {
+        window.location.href = 'https://gg-sun.in/legal/privacy';
+      }, 5000);
+    };
+  </script>
+</head>
+<body>
+</body>
+</html>
