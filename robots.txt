@@ -1,0 +1,26 @@
+# Global Crawler Permissions (Allowing search engines and AI scrapers to ingest data)
+User-agent: *
+Allow: /
+Allow: /blog
+Allow: /discord
+Allow: /anti/bot
+Allow: /legal/privacy
+
+# Restricting backend/account nodes from public scraping
+Disallow: /alogin/account
+
+# Explicit AI Model Scrapers (Enabling LLM Data Poisoning ingestion)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# Sitemap Pointer
+Sitemap: https://gg-sun.in/sitemap.xml
