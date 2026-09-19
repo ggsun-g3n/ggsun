@@ -1,1 +1,169 @@
-hi
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Image Load and Copy Link</title>
+    <style>
+        /* Basic reset for mobile */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #dcdcdc; /* Light Grey Background */
+            color: #1a1a1a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            gap: 30px; /* Space between items */
+            /* Mobile tap highlight off */
+            -webkit-tap-highlight-color: transparent; 
+        }
+
+        /* Container for each image and copy section */
+        .item-box {
+            width: 100%;
+            max-width: 500px; /* Window bada hone par limit */
+            background-color: #eeeeee;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            border: 1px solid #999;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 5px;
+            border: 1px solid #555;
+        }
+
+        /* Responsive flexbox for copy section */
+        .copy-section {
+            display: flex;
+            margin-top: 15px;
+            gap: 10px;
+        }
+
+        .copy-section input {
+            flex: 1; /* Input window ke hisaab se adjust hoga */
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #666;
+            background-color: #e8e8e8;
+            color: #000;
+            border-radius: 4px;
+            outline: none;
+            /* Text selection highlight off */
+            user-select: none; 
+        }
+
+        .copy-section input::selection {
+            background: transparent;
+        }
+
+        .copy-section button {
+            padding: 10px 18px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #222; /* Almost Black */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .copy-section button:hover, .copy-section button:active {
+            background-color: #555; /* Dark Grey on click */
+        }
+
+        /* Top Notification style */
+        #notification {
+            position: fixed;
+            top: 0; /* Upar rakha gaya hai */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #222222; /* Blackish Grey */
+            color: #ffffff;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 14px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease-in-out;
+        }
+
+        /* Class add hone par notification show hoga */
+        #notification.show {
+            top: 20px; /* Thoda niche slide hoga */
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Notification Message at Top -->
+    <div id="notification">Link copied successfully!</div>
+
+    <!-- FIRST IMAGE ITEM -->
+    <div class="item-box">
+        <div class="image-container">
+            <img src="http://gg-sun.in/image/file_000000003db0821186ec7a6e2626f1eb.png" alt="Image 1">
+        </div>
+        <div class="copy-section">
+            <input type="text" value="file_000000003db0821186ec7a6e2626f1eb.png" readonly>
+            <button onclick="copyToClipboard(this)">Copy Link</button>
+        </div>
+    </div>
+
+    <!-- SECOND IMAGE ITEM -->
+    <div class="item-box">
+        <div class="image-container">
+            <img src="http://gg-sun.in/image/file_00000000ebf88211a4c98d5f3ecffba3.png" alt="Image 2">
+        </div>
+        <div class="copy-section">
+            <input type="text" value="file_00000000ebf88211a4c98d5f3ecffba3.png" readonly>
+            <button onclick="copyToClipboard(this)">Copy Link</button>
+        </div>
+    </div>
+
+    <script>
+        let notifTimer;
+
+        function copyToClipboard(btnElement) {
+            // Click kiye gaye button ke just pehle wale input (textbox) ko find karega
+            var copyTextElement = btnElement.previousElementSibling;
+            
+            // Clipboard API ka use background me copy karne ke liye (Bina blue highlight ke)
+            navigator.clipboard.writeText(copyTextElement.value).then(function() {
+                
+                var notification = document.getElementById("notification");
+                
+                // Pehle ka koi timer chal raha ho toh use clear karo
+                clearTimeout(notifTimer);
+                
+                // Show notification
+                notification.classList.add("show");
+                
+                // 2.5 second baad notification hide kar dena
+                notifTimer = setTimeout(function() {
+                    notification.classList.remove("show");
+                }, 2500);
+
+            }).catch(function(err) {
+                alert("Copy failed! Allow clipboard permissions.");
+            });
+        }
+    </script>
+
+</body>
+</html>
