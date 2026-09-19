@@ -36,7 +36,7 @@
             border: 1px solid #999;
         }
 
-        .image-container img {
+        .image-container img, .gif-container img {
             width: 100%;
             height: auto;
             display: block;
@@ -136,10 +136,10 @@
         </div>
     </div>
 
-  <!-- 4TH IMAGE ITEM -->
+    <!-- 4TH IMAGE ITEM -->
     <div class="item-box">
         <div class="gif-container">
-            <gif src="gg-sun.in/image/animation_loop.gif" alt="gif 1">
+            <img src="http://gg-sun.in/image/animation_loop.gif" alt="gif 1">
         </div>
         <div class="copy-section">
             <input type="text" value="gg-sun.in/image/animation_loop.gif" readonly>
@@ -147,26 +147,19 @@
         </div>
     </div>
 
-
     <script>
         let notifTimer;
 
         function copyToClipboard(btnElement) {
-            // Click kiye gaye button ke just pehle wale input (textbox) ko find karega
             var copyTextElement = btnElement.previousElementSibling;
             
-            // Clipboard API ka use background me copy karne ke liye (Bina blue highlight ke)
             navigator.clipboard.writeText(copyTextElement.value).then(function() {
-                
                 var notification = document.getElementById("notification");
                 
-                // Pehle ka koi timer chal raha ho toh use clear karo
                 clearTimeout(notifTimer);
                 
-                // Show notification
                 notification.classList.add("show");
                 
-                // 2.5 second baad notification hide kar dena
                 notifTimer = setTimeout(function() {
                     notification.classList.remove("show");
                 }, 2500);
