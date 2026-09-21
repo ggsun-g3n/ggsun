@@ -73,9 +73,16 @@
 
         .bottom { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 20px; }
 
-        /* Custom-styled Google button: a real button that triggers
-           google.accounts.id.prompt() directly -- no iframe overlay,
-           no popup-window quirks on mobile browsers. */
+        /* Loading state while we check for an existing session on load,
+           so we don't flash the login screen for a split second. */
+        #bootLoader {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .google-btn {
             width: 100%;
             height: 52px;
@@ -133,8 +140,11 @@
 
 <body>
 
+    <!-- Shown briefly while we check for an existing session -->
+    <div id="bootLoader"></div>
+
     <!-- SIGN IN / SIGN UP SCREEN -->
-    <div class="screen" id="authView">
+    <div class="screen hidden" id="authView">
         <div class="logo">
             <img src="icon_id_1.png" alt="Tozyer Logo">
             <span>Tozyer</span>
@@ -193,19 +203,16 @@
         const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_2NNB76fsDQsJFY9u1rbZSA_RVDJkuom";
         // The secret key is intentionally NOT here. It belongs on a server only.
 
-        // In-memory storage adapter so Supabase doesn't touch localStorage.
-        // Session resets on page reload -- expected for this static page.
-        const memoryStorage = (() => {
-            let store = {};
-            return {
-                getItem: (k) => (k in store ? store[k] : null),
-                setItem: (k, v) => { store[k] = v; },
-                removeItem: (k) => { delete store[k]; }
-            };
-        })();
-
+        // FIX: use Supabase's default storage (browser localStorage) with
+        // persistSession + autoRefreshToken ON. The earlier in-memory
+        // storage adapter wiped the session on every refresh/tab close —
+        // that was the actual cause of the forced re-login.
         const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
-            auth: { storage: memoryStorage, persistSession: false, autoRefreshToken: false }
+            auth: {
+                persistSession: true,
+                autoRefreshToken: true,
+                detectSessionInUrl: false
+            }
         });
 
         let currentUser = null;
@@ -253,6 +260,7 @@
         }
 
         function showApp() {
+            document.getElementById('bootLoader').classList.add('hidden');
             document.getElementById('authView').classList.add('hidden');
             document.getElementById('appView').classList.remove('hidden');
             document.getElementById('userAvatar').src = currentUser.picture;
@@ -261,6 +269,7 @@
         }
 
         function showAuth() {
+            document.getElementById('bootLoader').classList.add('hidden');
             document.getElementById('appView').classList.add('hidden');
             document.getElementById('authView').classList.remove('hidden');
         }
@@ -274,7 +283,38 @@
             showAuth();
         }
 
-        window.onload = function () {
+        // FIX: on load, ask Supabase if a session already exists (it will,
+        // now that it's persisted in localStorage) and skip straight to
+        // the app screen instead of showing the login button again.
+        async function restoreSession() {
+            const { data: { session } } = await db.auth.getSession();
+            if (!session || !session.user) return false;
+
+            const { data: profile } = await db
+                .from('profiles')
+                .select('*')
+                .eq('id', session.user.id)
+                .single();
+
+            currentUser = {
+                id: session.user.id,
+                name: profile?.name || session.user.user_metadata?.full_name || session.user.email,
+                email: session.user.email,
+                picture: profile?.avatar_url || session.user.user_metadata?.avatar_url || ''
+            };
+            showApp();
+            return true;
+        }
+
+        // Keep currentUser in sync if the token silently refreshes or the
+        // session is lost some other way (e.g. revoked, expired).
+        db.auth.onAuthStateChange((event) => {
+            if (event === 'SIGNED_OUT') {
+                currentUser = null;
+            }
+        });
+
+        window.onload = async function () {
             google.accounts.id.initialize({
                 client_id: GOOGLE_CLIENT_ID,
                 callback: handleCredentialResponse,
@@ -288,6 +328,11 @@
             });
 
             document.getElementById('logoutBtn').addEventListener('click', logout);
+
+            const restored = await restoreSession();
+            if (!restored) {
+                showAuth();
+            }
         };
     </script>
 </body>
