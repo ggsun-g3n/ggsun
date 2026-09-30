@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tozyer Admin Panel</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --bg: #0e0f12;
+            --card: #1a1c20;
+            --text: #f2f2f2;
+            --sub: #9a9ea6;
+            --border: #2a2d33;
+            --accent: #20c97a;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-top: 0;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 20px;
+            outline: none;
+        }
+
+        .search-bar:focus {
+            border-color: var(--accent);
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            background: var(--card);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: #222;
+            color: var(--sub);
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        select {
+            background: var(--bg);
+            color: var(--text);
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            outline: none;
+        }
+
+        .upi-edit {
+            border: none;
+            background: transparent;
+            color: var(--accent);
+            border-bottom: 1px dashed var(--accent);
+            cursor: text;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .upi-edit:focus {
+            border-bottom: 1px solid var(--accent);
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-pending {
+            background: #f5a524;
+            color: #000;
+        }
+
+        .status-successful {
+            background: #20c97a;
+            color: #000;
+        }
+
+        .status-failed {
+            background: #f6465d;
+            color: #fff;
+        }
+
+        button.btn {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    
+        .hidden {
+            display: none !important;
+        }
+
+        .login-card {
+            max-width: 360px;
+            margin: 12vh auto 0;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .login-card h1 {
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        .login-card input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .login-card input:focus {
+            border-color: var(--accent);
+        }
+
+        .login-card button.btn {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+        }
+
+        .login-err {
+            color: #f6465d;
+            font-size: 14px;
+            min-height: 20px;
+            margin-bottom: 8px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+        }
+
+        .topbar h1 {
+            border: none;
+            padding: 0;
+            margin: 0;
+            font-size: 24px;
+        }
+
+        button.btn.ghost {
+            background: transparent;
+            color: var(--sub);
+            border: 1px solid var(--border);
+        }
+
+        .upi-edit:disabled {
+            color: var(--sub);
+            border-bottom: none;
+            cursor: default;
+        }
+    
+    </style>
+</head>
+
+<body>
+
+    <div id="loginView" class="login-card hidden">
+        <h1>Tozyer Admin Login</h1>
+        <input type="email" id="loginEmail" placeholder="Admin email" autocomplete="username">
+        <input type="password" id="loginPass" placeholder="Password" autocomplete="current-password">
+        <div class="login-err" id="loginErr"></div>
+        <button class="btn" id="loginBtn">Sign in</button>
+    </div>
+
+    <div id="panelView" class="hidden">
+        <div class="topbar">
+            <h1>Withdrawal Management Panel</h1>
+            <button class="btn ghost" id="logoutBtn">Sign out</button>
+        </div>
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search by User Email...">
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>User Email</th>
+                        <th>Amount</th>
+                        <th>UPI ID (Click to Edit)</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="wTableBody">
+                    <tr>
+                        <td colspan="6" style="text-align:center; padding:20px;">Loading data...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = "https://qwdbapckawxkqrrwxusm.supabase.co";
+        const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_xcp3SZkduNreKLsqe_kE4g_CxPNKbRW";
+        const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+            auth: { persistSession: true, autoRefreshToken: true }
+        });
+
+        const $ = (id) => document.getElementById(id);
+        let withdrawalsData = [];
+
+        function esc(v) {
+            return String(v ?? '').replace(/[&<>"']/g, (c) => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[c]));
+        }
+
+        function showLogin(msg) {
+            $('panelView').classList.add('hidden');
+            $('loginView').classList.remove('hidden');
+            $('loginErr').textContent = msg || '';
+        }
+
+        function showPanel() {
+            $('loginView').classList.add('hidden');
+            $('panelView').classList.remove('hidden');
+        }
+
+        async function boot() {
+            const { data: { session } } = await sb.auth.getSession();
+            if (!session) { showLogin(); return; }
+
+            const { data: ok, error } = await sb.rpc('is_admin');
+            if (error || ok !== true) {
+                await sb.auth.signOut();
+                showLogin('This account is not an admin.');
+                return;
+            }
+            showPanel();
+            fetchWithdrawals();
+        }
+
+        $('loginBtn').addEventListener('click', async () => {
+            const email = $('loginEmail').value.trim();
+            const password = $('loginPass').value;
+            if (!email || !password) { $('loginErr').textContent = 'Enter email and password.'; return; }
+
+            $('loginBtn').disabled = true;
+            const { error } = await sb.auth.signInWithPassword({ email, password });
+            $('loginBtn').disabled = false;
+            if (error) { $('loginErr').textContent = error.message; return; }
+
+            $('loginPass').value = '';
+            boot();
+        });
+
+        $('loginPass').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') $('loginBtn').click();
+        });
+
+        $('logoutBtn').addEventListener('click', async () => {
+            await sb.auth.signOut();
+            withdrawalsData = [];
+            showLogin();
+        });
+
+        async function fetchWithdrawals() {
+            const { data, error } = await sb.from('withdrawals')
+                .select('id, amount, upi_id, status, created_at, user_id, users(email)')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                $('wTableBody').innerHTML =
+                    '<tr><td colspan="6" style="text-align:center;padding:20px;">Could not load: ' + esc(error.message) + '</td></tr>';
+                return;
+            }
+            withdrawalsData = data || [];
+            applySearch();
+        }
+
+        function applySearch() {
+            const val = $('searchInput').value.toLowerCase();
+            renderTable(withdrawalsData.filter((w) => (w.users?.email || '').toLowerCase().includes(val)));
+        }
+
+        function renderTable(data) {
+            const tbody = $('wTableBody');
+            tbody.innerHTML = '';
+
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No records found.</td></tr>';
+                return;
+            }
+
+            data.forEach((w) => {
+                const tr = document.createElement('tr');
+                const date = new Date(w.created_at).toLocaleString();
+                const email = w.users?.email || 'Unknown User';
+                const pending = w.status === 'pending';
+                const opt = (v, label) =>
+                    `<option value="${v}" ${w.status === v ? 'selected' : ''}>${label}</option>`;
+
+                tr.innerHTML = `
+                    <td>${esc(date)}</td>
+                    <td>${esc(email)}</td>
+                    <td style="font-weight:bold;">₹${esc(w.amount)}</td>
+                    <td>
+                        <input type="text" class="upi-edit" value="${esc(w.upi_id)}"
+                            data-id="${esc(w.id)}" data-orig="${esc(w.upi_id)}"
+                            ${pending ? '' : 'disabled'}
+                            title="${pending ? 'Click to edit' : 'Only pending withdrawals can be edited'}">
+                    </td>
+                    <td><span class="status-badge status-${esc(w.status)}">${esc(w.status)}</span></td>
+                    <td>
+                        <select data-id="${esc(w.id)}" ${w.status === 'failed' ? 'disabled' : ''}>
+                            ${opt('pending', 'Pending')}
+                            ${opt('successful', 'Successful')}
+                            ${opt('failed', 'Failed')}
+                        </select>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        $('searchInput').addEventListener('input', applySearch);
+
+        $('wTableBody').addEventListener('change', (e) => {
+            const t = e.target;
+            if (t.matches('select[data-id]')) updateStatus(t.dataset.id, t.value);
+            else if (t.matches('input.upi-edit')) updateUpi(t);
+        });
+
+        async function updateStatus(id, newStatus) {
+            if (!confirm(`Are you sure you want to mark this withdrawal as ${newStatus.toUpperCase()}? (If Failed, money will refund)`)) {
+                applySearch();
+                return;
+            }
+
+            const res = await sb.rpc('admin_update_withdrawal', {
+                p_withdrawal_id: id,
+                p_status: newStatus
+            });
+            if (res.error) alert('Error updating status: ' + res.error.message);
+            else alert('Status updated successfully!');
+            fetchWithdrawals();
+        }
+
+        async function updateUpi(input) {
+            const newUpi = input.value.trim();
+            if (newUpi === input.dataset.orig) return;
+
+            if (!newUpi.includes('@')) {
+                alert('Invalid UPI');
+                input.value = input.dataset.orig;
+                return;
+            }
+
+            const res = await sb.rpc('admin_update_upi', {
+                p_withdrawal_id: input.dataset.id,
+                p_upi: newUpi
+            });
+            if (res.error) {
+                alert('Error updating UPI: ' + res.error.message);
+                input.value = input.dataset.orig;
+                return;
+            }
+            input.dataset.orig = newUpi;
+            alert('UPI ID Updated!');
+        }
+
+        boot();
+    </script>
+</body>
+
+</html>
