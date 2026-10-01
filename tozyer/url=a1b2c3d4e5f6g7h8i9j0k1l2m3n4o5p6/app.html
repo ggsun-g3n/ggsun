@@ -1,1 +1,335 @@
-hi
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --bg: #0e0f12;
+            --card: #1a1c20;
+            --text: #f2f2f2;
+            --sub: #9a9ea6;
+            --border: #2a2d33;
+            --accent: #20c97a;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-top: 0;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 20px;
+            outline: none;
+        }
+
+        .search-bar:focus {
+            border-color: var(--accent);
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            background: var(--card);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: #222;
+            color: var(--sub);
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        select {
+            background: var(--bg);
+            color: var(--text);
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            outline: none;
+        }
+
+        .upi-edit {
+            border: none;
+            background: transparent;
+            color: var(--accent);
+            border-bottom: 1px dashed var(--accent);
+            cursor: text;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .upi-edit:focus {
+            border-bottom: 1px solid var(--accent);
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-pending {
+            background: #f5a524;
+            color: #000;
+        }
+
+        .status-successful {
+            background: #20c97a;
+            color: #000;
+        }
+
+        .status-failed {
+            background: #f6465d;
+            color: #fff;
+        }
+
+        button.btn {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .login-box { max-width: 360px; margin: 12vh auto 0; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+        .login-box h1 { font-size: 20px; border: none; margin-bottom: 14px; padding: 0; }
+        .login-box input { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: #fff; font-size: 16px; outline: none; }
+        .login-box button { width: 100%; padding: 12px; font-size: 16px; }
+        .err { color: #f6465d; font-size: 13px; min-height: 18px; margin-bottom: 8px; }
+        .topbar { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .topbar button { white-space: nowrap; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+
+<body>
+
+    <div id="loginView" class="login-box">
+        <h1>Admin Login</h1>
+        <input type="email" id="adminEmail" placeholder="Admin email" autocomplete="username">
+        <input type="password" id="adminPass" placeholder="Password" autocomplete="current-password">
+        <div class="err" id="loginErr"></div>
+        <button class="btn" id="loginBtn">Login</button>
+    </div>
+
+    <div id="panelView" class="hidden">
+        <div class="topbar">
+            <h1 style="flex:1">Withdrawal Management Panel</h1>
+            <button class="btn" id="logoutBtn">Logout</button>
+        </div>
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search by User Email...">
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>User Email</th>
+                        <th>Amount</th>
+                        <th>UPI ID (Click to Edit)</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="wTableBody">
+                    <tr>
+                        <td colspan="6" style="text-align:center; padding:20px;">Loading data...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = "https://qwdbapckawxkqrrwxusm.supabase.co";
+        const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_xcp3SZkduNreKLsqe_kE4g_CxPNKbRW";
+        const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+            auth: { storageKey: 'sb-admin-panel-auth', persistSession: true }
+        });
+
+        let withdrawalsData = [];
+        let refreshTimer = null;
+
+        function esc(s) {
+            return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[c]));
+        }
+
+        function show(isPanel) {
+            document.getElementById('loginView').classList.toggle('hidden', isPanel);
+            document.getElementById('panelView').classList.toggle('hidden', !isPanel);
+        }
+
+        async function enterPanel() {
+            const { data: session } = await sb.auth.getSession();
+            if (!session.session) { show(false); return; }
+            const { data: ok } = await sb.rpc('wallet_is_admin');
+            if (ok !== true) {
+                await sb.auth.signOut();
+                document.getElementById('loginErr').textContent = 'Ye account admin nahi hai.';
+                show(false);
+                return;
+            }
+            show(true);
+            await fetchWithdrawals();
+            clearInterval(refreshTimer);
+            refreshTimer = setInterval(fetchWithdrawals, 15000);
+        }
+
+        document.getElementById('loginBtn').addEventListener('click', async () => {
+            const err = document.getElementById('loginErr');
+            err.textContent = '';
+            const { error } = await sb.auth.signInWithPassword({
+                email: document.getElementById('adminEmail').value.trim(),
+                password: document.getElementById('adminPass').value
+            });
+            if (error) { err.textContent = error.message; return; }
+            document.getElementById('adminPass').value = '';
+            enterPanel();
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            clearInterval(refreshTimer);
+            await sb.auth.signOut();
+            show(false);
+        });
+
+        async function fetchWithdrawals() {
+            const { data, error } = await sb.rpc('admin_list_withdrawals');
+            if (error) {
+                document.getElementById('wTableBody').innerHTML =
+                    '<tr><td colspan="6" style="text-align:center;color:#f6465d;">' + esc(error.message) + '</td></tr>';
+                return;
+            }
+            withdrawalsData = data || [];
+            applyFilter();
+        }
+
+        function applyFilter() {
+            const val = document.getElementById('searchInput').value.toLowerCase();
+            renderTable(withdrawalsData.filter(w => (w.email || '').toLowerCase().includes(val)));
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('wTableBody');
+            tbody.innerHTML = '';
+
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No records found.</td></tr>';
+                return;
+            }
+
+            data.forEach(w => {
+                const tr = document.createElement('tr');
+                const date = new Date(w.created_at).toLocaleString();
+                const email = w.email || 'Unknown User';
+                const isPending = w.status === 'pending';
+
+                tr.innerHTML = `
+                    <td>${esc(date)}</td>
+                    <td>${esc(email)}</td>
+                    <td style="font-weight:bold;">₹${esc(w.amount)}</td>
+                    <td>
+                        <input type="text" class="upi-edit" value="${esc(w.upi_id)}" data-id="${esc(w.id)}" data-orig="${esc(w.upi_id)}" ${isPending ? '' : 'readonly'} title="Click to edit">
+                    </td>
+                    <td><span class="status-badge status-${esc(w.status)}">${esc(w.status)}</span></td>
+                    <td>
+                        ${isPending ? `
+                        <select data-id="${esc(w.id)}">
+                            <option value="pending" selected>Pending</option>
+                            <option value="successful">Successful</option>
+                            <option value="failed">Failed (refund)</option>
+                        </select>` : '<span style="color:var(--sub);font-size:13px;">Final</span>'}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            tbody.querySelectorAll('select[data-id]').forEach(sel => {
+                sel.addEventListener('change', () => updateStatus(sel.dataset.id, sel.value));
+            });
+            tbody.querySelectorAll('input.upi-edit:not([readonly])').forEach(inp => {
+                inp.addEventListener('change', () => updateUpi(inp.dataset.id, inp.value.trim(), inp.dataset.orig));
+            });
+        }
+
+        document.getElementById('searchInput').addEventListener('input', applyFilter);
+
+        async function updateStatus(id, newStatus) {
+            if (newStatus === 'pending') return;
+            if (!confirm(`Mark this withdrawal as ${newStatus.toUpperCase()}? ` +
+                    (newStatus === 'failed' ? '(Paisa user ko refund ho jayega) ' : '') + 'Ye final hai.')) {
+                fetchWithdrawals();
+                return;
+            }
+            const res = await sb.rpc('admin_update_withdrawal', { p_withdrawal_id: id, p_status: newStatus });
+            if (res.error) alert('Error: ' + res.error.message);
+            fetchWithdrawals();
+        }
+
+        async function updateUpi(id, newUpi, orig) {
+            if (newUpi === orig) return;
+            if (!/^[A-Za-z0-9._-]{2,256}@[A-Za-z]{2,64}$/.test(newUpi)) {
+                alert('Invalid UPI');
+                fetchWithdrawals();
+                return;
+            }
+            const res = await sb.rpc('admin_update_upi', { p_withdrawal_id: id, p_upi: newUpi });
+            if (res.error) alert('Error: ' + res.error.message);
+            else alert('UPI ID Updated!');
+            fetchWithdrawals();
+        }
+
+        enterPanel();
+    </script>
+</body>
+
+</html>
