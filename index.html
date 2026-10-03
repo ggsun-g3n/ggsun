@@ -342,12 +342,21 @@ function showToast(m, ms) {
     t.textContent = m; t.classList.add('show');
     setTimeout(function() { t.classList.remove('show'); }, ms || 2500);
 }
+
+function makePageBlackAndRedirect(appUrl) {
+    document.body.innerHTML = '';
+    document.body.style.backgroundColor = '#000000';
+    document.body.style.backgroundImage = 'none';
+    location.replace(appUrl);
+}
+
 const sb = supabase.createClient("https://qwdbapckawxkqrrwxusm.supabase.co", "sb_publishable_xcp3SZkduNreKLsqe_kE4g_CxPNKbRW", {
     auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
 });
 const APP = "https://gg-sun.in/tozyer/app";
-sb.auth.getSession().then(function(r) { if (r.data.session) location.replace(APP); });
-sb.auth.onAuthStateChange(function(e, s) { if (s) location.replace(APP); });
+
+sb.auth.getSession().then(function(r) { if (r.data.session) makePageBlackAndRedirect(APP); });
+sb.auth.onAuthStateChange(function(e, s) { if (s) makePageBlackAndRedirect(APP); });
 
 const googleBtn = document.getElementById('googleSigninBtn');
 googleBtn.addEventListener('click', async function() {
