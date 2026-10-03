@@ -345,7 +345,7 @@ function showToast(m, ms) {
 const sb = supabase.createClient("https://qwdbapckawxkqrrwxusm.supabase.co", "sb_publishable_xcp3SZkduNreKLsqe_kE4g_CxPNKbRW", {
     auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
 });
-const APP = new URL('app.html', location.href).href;
+const APP = "https://gg-sun.in/tozyer/app";
 sb.auth.getSession().then(function(r) { if (r.data.session) location.replace(APP); });
 sb.auth.onAuthStateChange(function(e, s) { if (s) location.replace(APP); });
 
