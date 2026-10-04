@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>Tozyer</title>
+<title>Twozyer</title>
 <link rel="preload" as="image" href="https://gg-sun.in/ele/gg4.gif">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -87,7 +87,7 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            padding: 44px 28px 36px;
+            padding: 44px 28px calc(36px + env(safe-area-inset-bottom, 0px));
             background: #000;
             z-index: 50;
         }
@@ -217,14 +217,18 @@
 
         .terms {
             font-size: 13px;
-            line-height: 1.55;
+            line-height: 1.6;
             color: rgba(247, 245, 242, 0.55);
-            margin: 4px 0 0;
+            margin: 4px auto 0;
+            max-width: 320px;
+            text-align: center;
+            text-wrap: balance;
         }
 
         .terms a {
             color: #F7F5F2;
             text-decoration: underline;
+            white-space: nowrap;
         }
 
 .toast{position:fixed;left:50%;bottom:40px;transform:translateX(-50%);background:#333;color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;z-index:99;opacity:0;transition:opacity .2s;pointer-events:none}
@@ -235,14 +239,14 @@
     <div class="screen" id="authScreen">
         <div class="logo">
             <div id="logoMedia"></div>
-            <span>Tozyer</span>
+            <span>Twozyer</span>
         </div>
 
         <div class="illustration">
             <div id="heroMedia"></div>
         </div>
 
-        <h1 class="auth-title">Welcome to<br>Tozyer</h1>
+        <h1 class="auth-title">Welcome to<br>Twozyer</h1>
 
         <div class="spacer"></div>
 
@@ -257,9 +261,9 @@
                 Continue with Google
             </button>
             <p class="terms">
-                By continuing, you agree to Tozyer's
-                <a href="https://gg-sun.in/legal/prank" target="_blank" rel="noopener">Terms of Service</a> and
-                <a href="https://gg-sun.in/legal/prank" target="_blank" rel="noopener">Privacy Policy</a>.
+                By continuing, you agree to Twozyer's
+                <a href="https://gg-sun.in/illegal/terms" target="_blank" rel="noopener">Terms of Service</a> and
+                <a href="https://gg-sun.in/illegal/privacy" target="_blank" rel="noopener">Privacy Policy</a>.
             </p>
         </div>
     </div>
@@ -353,7 +357,7 @@ function makePageBlackAndRedirect(appUrl) {
 const sb = supabase.createClient("https://qwdbapckawxkqrrwxusm.supabase.co", "sb_publishable_xcp3SZkduNreKLsqe_kE4g_CxPNKbRW", {
     auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
 });
-const APP = "https://gg-sun.in/tozyer/app";
+const APP = "https://gg-sun.in/store";
 
 sb.auth.getSession().then(function(r) { if (r.data.session) makePageBlackAndRedirect(APP); });
 sb.auth.onAuthStateChange(function(e, s) { if (s) makePageBlackAndRedirect(APP); });
