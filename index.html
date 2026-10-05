@@ -3,7 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>Twozyer</title>
+<title>Twozyer company</title>
+<meta name="description" content="Twozyer – Company with a store for apps, books &amp; more.">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Twozyer company">
+<meta name="theme-color" content="#000000">
+<meta name="application-name" content="Twozyer company">
+<meta name="apple-mobile-web-app-title" content="Twozyer company">
+<link rel="icon" type="image/png" href="https://gg-sun.in/favicon.png">
+<link rel="apple-touch-icon" href="https://gg-sun.in/favicon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Twozyer company">
+<meta property="og:title" content="Twozyer company">
+<meta property="og:description" content="Twozyer – Company with a store for apps, books &amp; more.">
+<meta property="og:image" content="https://gg-sun.in/favicon.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Twozyer company">
+<meta name="twitter:description" content="Twozyer – Company with a store for apps, books &amp; more.">
+<meta name="twitter:image" content="https://gg-sun.in/favicon.png">
 <link rel="preload" as="image" href="https://gg-sun.in/ele/gg4.gif">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -233,6 +250,48 @@
 
 .toast{position:fixed;left:50%;bottom:40px;transform:translateX(-50%);background:#333;color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;z-index:99;opacity:0;transition:opacity .2s;pointer-events:none}
 .toast.show{opacity:1}
+
+/* ---------- Responsive: mobile + desktop ---------- */
+@media (hover:hover) {
+    .google-btn { transition: opacity .15s, transform .15s; }
+    .google-btn:hover { opacity: .92; transform: translateY(-1px); }
+    .terms a:hover { opacity: .8; }
+}
+
+/* Short phones / landscape */
+@media (max-height: 640px) {
+    .screen { padding-top: 24px; }
+    .logo { margin-bottom: 20px; }
+    .illustration { margin-bottom: 20px; }
+    .auth-title { font-size: 28px; }
+}
+
+/* Tablet + desktop: centered card */
+@media (min-width: 768px) {
+    html, body { background: var(--bg); }
+    .screen {
+        top: 50%;
+        bottom: auto;
+        left: 50%;
+        right: auto;
+        margin: 0;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        max-width: 480px;
+        height: min(780px, calc(100% - 48px));
+        padding: 56px 44px 44px;
+        border-radius: 28px;
+        border: 1px solid var(--border);
+        box-shadow: 0 24px 80px rgba(0, 0, 0, .55);
+    }
+    .auth-title { font-size: 38px; }
+    .google-btn { cursor: pointer; }
+}
+
+/* Big desktop screens */
+@media (min-width: 1200px) {
+    .screen { max-width: 520px; padding: 64px 52px 52px; }
+}
 </style>
 </head>
 <body>
