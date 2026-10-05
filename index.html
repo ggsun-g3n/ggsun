@@ -338,6 +338,17 @@
     .bottom, .terms { max-width: 560px; }
     .terms { font-size: 17px; }
 }
+
+/* Logo/hero: drag, select aur long-press save rokne ke liye */
+#logoMedia, #heroMedia { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+#logoMedia img, #logoMedia video, #heroMedia img, #heroMedia video {
+    -webkit-user-drag: none;
+    user-drag: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    pointer-events: none;
+}
 </style>
 </head>
 <body>
@@ -466,6 +477,17 @@ const APP = "https://gg-sun.in/store";
 
 sb.auth.getSession().then(function(r) { if (r.data.session) makePageBlackAndRedirect(APP); });
 sb.auth.onAuthStateChange(function(e, s) { if (s) makePageBlackAndRedirect(APP); });
+
+// Logo/hero: right-click, drag aur long-press save band
+['logoMedia', 'heroMedia'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+    el.addEventListener('dragstart', function(e) { e.preventDefault(); });
+});
+document.addEventListener('contextmenu', function(e) {
+    if (e.target && e.target.closest && e.target.closest('#logoMedia, #heroMedia')) e.preventDefault();
+});
 
 const googleBtn = document.getElementById('googleSigninBtn');
 googleBtn.addEventListener('click', async function() {
