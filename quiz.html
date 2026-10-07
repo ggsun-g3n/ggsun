@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Samaj Aur Bheed Quiz</title>
+<style>
+:root{--bg:#0b0d14;--card:#151926;--line:#2a3045;--tx:#e8ebf5;--mut:#8b93ad;--ac:#7c5cff;--ok:#22c55e;--no:#ef4444;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+#app{height:100%;max-width:560px;margin:0 auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.screen{display:none;flex:1;min-height:0;flex-direction:column}
+.screen.on{display:flex}
+.center{justify-content:center;align-items:center;text-align:center;gap:14px}
+h1{font-size:clamp(22px,6vw,30px)}
+.mut{color:var(--mut);font-size:14px}
+input{width:100%;padding:14px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:17px;text-align:center;outline:none}
+input:focus{border-color:var(--ac)}
+button{font:inherit;color:var(--tx);cursor:pointer}
+.main{width:100%;padding:14px;border:0;border-radius:12px;background:var(--ac);font-size:17px;font-weight:600}
+.top{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--mut)}
+.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ac);transition:width .3s}
+.qa{flex:1;min-height:0;display:flex;flex-direction:column;gap:10px;font-size:16px}
+.title{color:var(--ac);font-weight:600;font-size:.85em}
+.q{font-weight:600;line-height:1.35;font-size:1.05em}
+.opts{flex:1;min-height:0;display:flex;flex-direction:column;gap:10px}
+.opt{flex:1;min-height:0;display:flex;align-items:center;text-align:left;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);font-size:.92em;line-height:1.35;transition:.15s}
+.opt.ok{border-color:var(--ok);background:#12301f}
+.opt.no{border-color:var(--no);background:#3a1416}
+.opt:disabled{cursor:default}
+.big{font-size:clamp(54px,18vw,84px);font-weight:800;line-height:1}
+.msg{font-size:16px;line-height:1.4;max-width:34ch}
+.row{display:flex;gap:10px;width:100%}
+.row button{flex:1}
+.sec{background:var(--card);border:1px solid var(--line)}
+#s-name{position:relative;overflow:hidden;border-radius:26px;padding:16px;gap:clamp(6px,1.6vh,14px);background:linear-gradient(160deg,#ffe3f1 0%,#e6dcff 50%,#d3f1ff 100%);color:#5a3a5e}
+#s-name>*:not(.dc){position:relative;z-index:2}
+.dc{position:absolute;z-index:1;pointer-events:none;animation:fl 3.2s ease-in-out infinite}
+@keyframes fl{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-10px) rotate(6deg)}}
+.cat{width:clamp(80px,22vh,150px);height:auto;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.eyes{transform-origin:60px 60px;animation:bl 4s infinite}
+@keyframes bl{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+#s-name .hi{font-size:clamp(26px,7vw,34px);color:#7a3d7e}
+#s-name .sub{font-size:18px;font-weight:600;color:#8a5a8e}
+#s-name input{background:#fff;border:3px solid #ffb3d1;color:#5a3a5e;border-radius:999px;box-shadow:0 6px 0 #f3c5da;max-width:340px}
+#s-name input::placeholder{color:#c7a6c9}
+#s-name input:focus{border-color:#a78bfa}
+.cute{background:linear-gradient(135deg,#ff7eb6,#a78bfa);border-radius:999px;max-width:340px;box-shadow:0 6px 0 #d45f97;color:#fff}
+.cute:active{transform:translateY(4px);box-shadow:0 2px 0 #d45f97}
+.bs2{font-size:14px;font-weight:600;color:#8a5a8e;min-height:18px}
+html,body{overscroll-behavior:none;touch-action:manipulation;position:fixed;inset:0;width:100%}
+*{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+input{-webkit-user-select:text;user-select:text}
+svg.dc{display:block}
+
+#s-quiz,#s-end{position:relative;overflow:hidden;border-radius:26px;padding:14px;background:var(--qbg,linear-gradient(160deg,#ffe3f1,#e6dcff));color:#4a3350;transition:background .4s}
+#s-quiz>*:not(.dc),#s-end>*:not(.dc){position:relative;z-index:2}
+#s-quiz .top{background:rgba(255,255,255,.75);padding:6px 14px;border-radius:999px;color:#6b4a73;font-weight:700}
+#s-quiz .bar{background:rgba(255,255,255,.8);height:8px;border-radius:99px}
+#s-quiz .bar i{background:var(--acc,#ff7eb6);border-radius:99px}
+#s-quiz .qa{justify-content:center;gap:12px;padding:0 2px}
+.qcard{background:#fff;border-radius:20px;padding:14px;box-shadow:0 5px 0 rgba(0,0,0,.08);display:flex;flex-direction:column;gap:8px}
+#s-quiz .title{align-self:flex-start;background:var(--acc,#ff7eb6);color:#fff;padding:3px 11px;border-radius:999px;font-size:.78em;font-weight:700}
+#s-quiz .q{color:#4a3350;font-size:1em}
+#s-quiz .opts{flex:none;gap:9px}
+#s-quiz .opt{flex:none;gap:9px;padding:7px 10px;background:#fff;border:2px solid #fff;color:#4a3350;border-radius:14px;box-shadow:0 4px 0 rgba(0,0,0,.08);font-size:.84em}
+.lt{flex:none;width:24px;height:24px;border-radius:50%;background:var(--acc,#ff7eb6);color:#fff;font-weight:700;font-size:.9em;display:flex;align-items:center;justify-content:center}
+#s-quiz .opt.ok{background:#d9f7e4;border-color:#22c55e}
+#s-quiz .opt.no{background:#ffe0e3;border-color:#ef4444}
+#s-quiz .opt:active:not(:disabled){transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.08)}
+#s-end{gap:clamp(6px,1.6vh,14px)}
+#s-end .mut,#s-end .msg{color:#6b4a73;font-weight:600}
+#s-end .big{color:var(--acc,#ff7eb6);text-shadow:0 5px 0 rgba(0,0,0,.08)}
+#s-end .msg{background:#fff;padding:10px 14px;border-radius:16px}
+.cute.sec2{background:#fff;color:#7a3d7e;box-shadow:0 6px 0 #e0cbe8}
+
+#s-end #shot{position:absolute;top:10px;right:10px;z-index:4;width:42px;height:42px;border-radius:50%;border:0;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 0 rgba(0,0,0,.1)}
+#s-end #shot:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.1)}
+#s-end .big{font-size:clamp(44px,11vh,84px)}
+.att{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;width:100%}
+.chip{background:#fff;border-radius:12px;padding:6px 2px;display:flex;flex-direction:column;gap:2px;box-shadow:0 3px 0 rgba(0,0,0,.08)}
+.chip span{font-size:10px;color:#8a5a8e;font-weight:600}
+.chip b{font-size:15px;color:#4a3350}
+.chip.top{background:#ffd6e7}.chip.top b{color:#e0407f}
+.chip.empty{opacity:.55}
+.cute:disabled{opacity:.6;cursor:default;box-shadow:none}
+#toast{position:absolute;left:50%;bottom:12px;transform:translate(-50%,20px);background:#4a3350;color:#fff;padding:8px 16px;border-radius:999px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:5;white-space:nowrap}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+#s-name input[readonly]{background:#f6eefa;color:#7a3d7e;font-weight:600}
+#s-end #back{position:absolute;top:10px;left:10px;z-index:4;width:42px;height:42px;border-radius:50%;border:0;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 0 rgba(0,0,0,.1)}
+#s-end #back:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.1)}
+#s-name #sb{max-width:340px}
+</style>
+</head>
+<body>
+<svg class="dc" style="width:0;height:0;position:absolute" aria-hidden="true"><defs>
+<symbol id="cloud" viewBox="0 0 48 36"><ellipse cx="24" cy="26" rx="19" ry="9" fill="currentColor"/><circle cx="14" cy="20" r="9" fill="currentColor"/><circle cx="28" cy="15" r="12" fill="currentColor"/></symbol>
+<symbol id="star" viewBox="0 0 48 48"><polygon points="24,3 30,18 46,19 34,30 38,45 24,37 10,45 14,30 2,19 18,18" fill="currentColor" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></symbol>
+<symbol id="heart" viewBox="0 0 48 48"><path d="M24 43C6 29 3 15 13 9c5-3 10 0 11 5 1-5 6-8 11-5 10 6 7 20-11 34z" fill="currentColor"/></symbol>
+<symbol id="spark" viewBox="0 0 48 48"><path d="M24 2Q26 22 46 24Q26 26 24 46Q22 26 2 24Q22 22 24 2z" fill="currentColor"/></symbol>
+<symbol id="rainbow" viewBox="0 0 48 30"><g fill="none" stroke-width="4" stroke-linecap="round"><path d="M4 28A20 20 0 0 1 44 28" stroke="#ff7eb6"/><path d="M10 28A14 14 0 0 1 38 28" stroke="#ffd36e"/><path d="M16 28A8 8 0 0 1 32 28" stroke="#7ad7f0"/></g></symbol>
+<symbol id="pop" viewBox="0 0 48 48"><rect x="22" y="26" width="4" height="20" rx="2" fill="#fff"/><circle cx="24" cy="18" r="15" fill="currentColor"/><path d="M24 18m0 0a3 3 0 1 1 5 2a7 7 0 1 1-11-6a11 11 0 0 1 15 5" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></symbol>
+<symbol id="fly" viewBox="0 0 48 40"><ellipse cx="14" cy="14" rx="12" ry="10" fill="currentColor" transform="rotate(-20 14 14)"/><ellipse cx="34" cy="14" rx="12" ry="10" fill="currentColor" transform="rotate(20 34 14)"/><ellipse cx="16" cy="28" rx="8" ry="7" fill="currentColor" opacity=".75"/><ellipse cx="32" cy="28" rx="8" ry="7" fill="currentColor" opacity=".75"/><rect x="22" y="8" width="4" height="26" rx="2" fill="#7a3d7e"/></symbol>
+<symbol id="flower" viewBox="0 0 48 48"><g fill="currentColor"><circle cx="24" cy="10" r="9"/><circle cx="38" cy="20" r="9"/><circle cx="33" cy="37" r="9"/><circle cx="15" cy="37" r="9"/><circle cx="10" cy="20" r="9"/></g><circle cx="24" cy="25" r="7" fill="#ffd36e"/></symbol>
+<symbol id="balloon" viewBox="0 0 40 56"><ellipse cx="20" cy="19" rx="15" ry="18" fill="currentColor"/><ellipse cx="14" cy="12" rx="4" ry="6" fill="#fff" opacity=".5"/><path d="M16 37h8l-4 5z" fill="currentColor"/><path d="M20 42q-6 6 0 11" stroke="#a68bb0" stroke-width="1.8" fill="none"/></symbol>
+</defs></svg>
+<div id="app">
+  <div class="screen on center" id="s-name"><svg class="dc" viewBox="0 0 48 48" style="left:4%;top:5%;width:56px;height:56px;color:#fff;animation-delay:0s" aria-hidden="true"><use href="#cloud"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:70%;top:10%;width:46px;height:46px;color:#fff;animation-delay:1.2s" aria-hidden="true"><use href="#cloud"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:85%;top:3%;width:24px;height:24px;color:#ffd36e;animation-delay:0.4s" aria-hidden="true"><use href="#star"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:12%;top:26%;width:22px;height:22px;color:#fff;animation-delay:0.8s" aria-hidden="true"><use href="#spark"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:86%;top:30%;width:26px;height:26px;color:#ff7eb6;animation-delay:1.6s" aria-hidden="true"><use href="#heart"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:3%;top:42%;width:52px;height:52px;color:;animation-delay:0.2s" aria-hidden="true"><use href="#rainbow"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:90%;top:52%;width:20px;height:20px;color:#ffd36e;animation-delay:1s" aria-hidden="true"><use href="#spark"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:4%;top:62%;width:38px;height:38px;color:#ff7eb6;animation-delay:1.4s" aria-hidden="true"><use href="#pop"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:84%;top:64%;width:40px;height:40px;color:#a78bfa;animation-delay:0.6s" aria-hidden="true"><use href="#fly"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:8%;top:80%;width:36px;height:36px;color:#ff9ec4;animation-delay:1.1s" aria-hidden="true"><use href="#flower"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:80%;top:80%;width:34px;height:34px;color:#7ad7f0;animation-delay:0.3s" aria-hidden="true"><use href="#balloon"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:46%;top:2%;width:20px;height:20px;color:#fff;animation-delay:1.8s" aria-hidden="true"><use href="#star"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:28%;top:92%;width:22px;height:22px;color:#a78bfa;animation-delay:0.9s" aria-hidden="true"><use href="#heart"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:62%;top:90%;width:30px;height:30px;color:#fff;animation-delay:1.5s" aria-hidden="true"><use href="#flower"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:92%;top:92%;width:18px;height:18px;color:#ff7eb6;animation-delay:0.5s" aria-hidden="true"><use href="#star"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:2%;top:90%;width:26px;height:26px;color:#ffd36e;animation-delay:1.9s" aria-hidden="true"><use href="#balloon"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:16%;top:10%;width:18px;height:18px;color:#fff;animation-delay:0.7s" aria-hidden="true"><use href="#heart"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:60%;top:3%;width:18px;height:18px;color:#a78bfa;animation-delay:1.3s" aria-hidden="true"><use href="#spark"/></svg>
+    
+    <svg class="cat" viewBox="0 0 120 110" aria-hidden="true">
+      <polygon points="18,40 22,6 50,26" fill="#ffb3d1"/><polygon points="102,40 98,6 70,26" fill="#ffb3d1"/>
+      <polygon points="24,32 26,16 40,27" fill="#ff8fbc"/><polygon points="96,32 94,16 80,27" fill="#ff8fbc"/>
+      <ellipse cx="60" cy="64" rx="48" ry="40" fill="#ffd6e7"/>
+      <g class="eyes"><ellipse cx="40" cy="60" rx="6" ry="8" fill="#5a3a5e"/><ellipse cx="80" cy="60" rx="6" ry="8" fill="#5a3a5e"/>
+      <circle cx="42" cy="57" r="2.2" fill="#fff"/><circle cx="82" cy="57" r="2.2" fill="#fff"/></g>
+      <ellipse cx="27" cy="74" rx="8" ry="5" fill="#ff9ec4" opacity=".8"/><ellipse cx="93" cy="74" rx="8" ry="5" fill="#ff9ec4" opacity=".8"/>
+      <path d="M52 74 Q56 80 60 74 Q64 80 68 74" stroke="#5a3a5e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <ellipse cx="60" cy="69" rx="3.5" ry="2.5" fill="#ff6fa5"/>
+      <g stroke="#c28aa8" stroke-width="1.5" stroke-linecap="round"><path d="M14 66 L30 68"/><path d="M14 76 L30 74"/><path d="M106 66 L90 68"/><path d="M106 76 L90 74"/></g>
+    </svg>
+    <h1 class="hi">Hello, friend!</h1>
+    <p class="sub">What's your name?</p>
+    <input id="nm" maxlength="20" placeholder="Type your cute name here" autocomplete="off">
+    <button class="main cute" id="go">Let's Play!</button>
+    <button class="main cute sec2" id="sb" style="display:none"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" style="vertical-align:-4px;margin-right:6px"><path d="M7 3h10v5a5 5 0 0 1-10 0z" fill="#ffb347"/><path d="M7 5H3c0 4 2 6 4.5 6M17 5h4c0 4-2 6-4.5 6" fill="none" stroke="#ffb347" stroke-width="1.8"/><rect x="10.8" y="12.5" width="2.4" height="4" fill="#ffb347"/><rect x="7.5" y="17" width="9" height="3.2" rx="1.2" fill="#a78bfa"/></svg>Scoreboard</button>
+    <p class="bs2" id="best"></p>
+  </div>
+  <div class="screen" id="s-quiz"><svg class="dc" viewBox="0 0 48 48" style="left:72%;top:0%;width:50px;height:50px;color:#fff;opacity:.75;animation-delay:0s" aria-hidden="true"><use href="#cloud"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:3%;top:1%;width:22px;height:22px;color:#fff;opacity:.75;animation-delay:0.5s" aria-hidden="true"><use href="#star"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:1%;top:90%;width:34px;height:34px;color:#fff;opacity:.75;animation-delay:1s" aria-hidden="true"><use href="#flower"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:88%;top:88%;width:30px;height:30px;color:#fff;opacity:.75;animation-delay:0.3s" aria-hidden="true"><use href="#balloon"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:92%;top:45%;width:18px;height:18px;color:#fff;opacity:.75;animation-delay:0.8s" aria-hidden="true"><use href="#spark"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:2%;top:48%;width:18px;height:18px;color:#fff;opacity:.75;animation-delay:1.4s" aria-hidden="true"><use href="#heart"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:30%;top:95%;width:44px;height:44px;color:#fff;opacity:.75;animation-delay:0.6s" aria-hidden="true"><use href="#cloud"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:50%;top:0%;width:16px;height:16px;color:#fff;opacity:.75;animation-delay:1.1s" aria-hidden="true"><use href="#spark"/></svg>
+    <div class="top"><span id="who"></span><span id="cnt"></span><span id="sc"></span></div>
+    <div class="bar"><i id="pg"></i></div>
+    <div class="qa" id="qa">
+      <div class="qcard"><div class="title" id="tt"></div><div class="q" id="qq"></div></div>
+      <div class="opts" id="oo"></div>
+    </div>
+  </div>
+  <div class="screen center" id="s-end"><svg class="dc" viewBox="0 0 48 48" style="left:4%;top:4%;width:56px;height:56px;color:#fff;opacity:.75;animation-delay:0s" aria-hidden="true"><use href="#cloud"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:84%;top:5%;width:26px;height:26px;color:#fff;opacity:.75;animation-delay:0.4s" aria-hidden="true"><use href="#star"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:8%;top:30%;width:24px;height:24px;color:#fff;opacity:.75;animation-delay:1s" aria-hidden="true"><use href="#heart"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:88%;top:34%;width:22px;height:22px;color:#fff;opacity:.75;animation-delay:0.7s" aria-hidden="true"><use href="#spark"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:4%;top:84%;width:36px;height:36px;color:#fff;opacity:.75;animation-delay:1.2s" aria-hidden="true"><use href="#flower"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:84%;top:80%;width:34px;height:34px;color:#fff;opacity:.75;animation-delay:0.2s" aria-hidden="true"><use href="#balloon"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:70%;top:92%;width:50px;height:50px;color:#fff;opacity:.75;animation-delay:0.9s" aria-hidden="true"><use href="#rainbow"/></svg><svg class="dc" viewBox="0 0 48 48" style="left:40%;top:3%;width:18px;height:18px;color:#fff;opacity:.75;animation-delay:1.3s" aria-hidden="true"><use href="#spark"/></svg>
+    <button id="back" aria-label="Back to start" title="Back to start"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="#7a3d7e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button id="shot" aria-label="Save screenshot" title="Save screenshot"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 4l-1.6 2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-2.4L15 4z" fill="#7a3d7e"/><circle cx="12" cy="12.5" r="3.6" fill="#fff"/><circle cx="12" cy="12.5" r="1.8" fill="#ff7eb6"/></svg></button>
+    <p class="mut" id="en"></p>
+    <div class="big" id="fs"></div>
+    <p class="mut" id="pc"></p>
+    <p class="msg" id="ms"></p>
+    <div class="att" id="at"></div>
+    <p class="mut" id="bs"></p>
+    <div class="row"><button class="main cute" id="again">Play Again</button></div>
+    <div id="toast"></div>
+  </div>
+</div>
+<script>
+const D=[
+["Samaj Aur Bheed","Jab main bahar nikalta hoon aur charo taraf logon ka shor, bheed aur unki normal life dekhta hoon—toh mere dimaag mein sabse pehla khayal kya aata hai?","Ek ajeeb si irritation hoti hai—yeh sab mujhe ek nakli aur khokhla loop lagta hai, aur main bas wahan se nikalkar apne akelepan mein wapas aana chahta hoon.","Ek ajeeb si khushi hoti hai—yeh sab mujhe ek zinda aur sachchi duniya lagti hai, aur main bas bheed ka hissa banke unke beech apni jagah dhoondhna chahta hoon."],
+["Meethe Ki Talab","Agar mere samne koi bahut accha khana ya mera so-called 'favourite' dessert rakh de—toh naturally mera reaction kaisa hota hai?","Mera system usme koi interest nahi leta—mere liye khana bas body ko zinda rakhne ka fuel hai, swaad ya 'comfort' jaisi cheez mere dimaag mein register hi nahi hoti.","Mera system turant jaag jata hai—mere liye meetha sirf swaad nahi, ek sukoon aur khushi ka pal hai, aur main usko dheere-dheere poori tarah enjoy karna pasand karta hoon."],
+["Vegan Framework","Diet aur khane-peene ke rules ko lekar meri approach exactly kya hai?","Main kisi label ya rulebook ke hisaab se nahi chalta—mera focus bas is baat par hai ki meri physical limit aur survival ke liye kya zaroori hai.","Main ek strict rulebook follow karta hoon—meri diet ethical principles par tiki hai aur main animal products se poori tarah door rehta hoon."],
+["Physical Reality (Athlete Identity)","Meri physical conditioning aur training ke peeche ka asli sach kya hai—kya main bas random workout karne wala banda hoon?","Main ek dedicated athlete hoon—apni physical body ko har din extreme limits tak push karna aur intense discipline maintain karna mera lifestyle hai.","Main bas kabhi-kabhi halki exercise karta hoon—na koi fixed schedule hai na intense training, bas fitness thodi theek rakhna mera lifestyle hai."],
+["Internal Belief System (Nastikta)","Bhagwan, kismat aur dharmic vishwas ko lekar meri internal mindset kya kehti hai?","Main ek pakka nastik (atheist) hoon—mere liye koi higher power ya kismat exist nahi karti, duniya sirf pure logic, cause-and-effect aur human actions se chalti hai.","Main ek pakka aastik hoon—mere liye bhagwan aur kismat sach mein exist karte hain, mushkil waqt mein unse miracle ki umeed rehti hai, aur duniya unki marzi se chalti hai."],
+["Rishton Ki Haqeeqat","Meri life mein aane wale logon aur in 'doston' ki actual jagah kya hai?","Woh bas temporary variables hain—ek data stream ki tarah, jinki ek expiry date hai aur jo kabhi bhi mere system se replace ya delete ho sakte hain.","Woh mere safar ka sabse zaroori hissa hain—ek parivaar ki tarah, jinke bina main long-term survive nahi kar sakta, aur jinko replace karna namumkin hai."],
+["Unspoken Love Life","Jis insaan ko main andar se bahut pasand karta tha—uske sath mera real-life connection kaisa raha?","Maine unse ek baar bhi baat nahi ki—main hamesha door se bas silent observer bana raha, apni feelings ko andar hi dabaye rakha aur zero communication rakha.","Maine aage badhkar unse baat ki—apni feelings khul kar express ki, har waqt connection banaye rakha aur ek sachcha rishta banane ki poori koshish ki."],
+["Moral Guilt","Jab main apne fayde ya kisi maqsad ke liye koi aisa step leta hoon jo society ki nazron mein galat hai—toh baad mein kaisa feel karta hoon?","Guilt naam ka code mere system mein hai hi nahi—jo step logic aur calculation ke hisaab se sahi tha, bas wahi matter karta hai; baki sab illusion hai.","Mere andar ek gehra guilt uthta hai—jo step society ki nazron mein galat tha, baad mein usne mujhe apne usoolon ke khilaf lagne par kaafi pareshan kiya."],
+["Deep Personal Truth","Jab Sandeep ka zikr aata hai ya woh mere dimaag mein aate hain—toh meri actual feelings kya hoti hain?","Main Sandeep se sach mein pyar karta hoon—chahe mera exterior kitna bhi cold ya dark kyun na ho, yeh feeling mera ek absolute truth hai.","Woh bas ek normal jaan-pehchan wale insaan hain—mere andar unke liye koi deep emotion nahi, unka zikr aane par koi hulchal nahi hoti."],
+["The Mind-Bending Love Paradox","Jab main 'pyaar' ke peeche ki psychology aur human logic ko dissect karta hoon—toh kaun sa sawal poora dimaag ghuma deta hai?","\"Tum kisi ko isliye pyar karte ho kyunki woh tumse karta hai—toh usne kya sochkar tumse pyar kiya tha? Ki yeh ek handsome ladka hai?\"—Yeh poora loop superficial attraction aur mutual illusion ka ek endless trap hai.","\"Sachcha pyaar bilkul selfless aur pure hota hai—usme koi condition ya calculation nahi hoti, woh bas bina soche ho jata hai.\"—Yeh poora loop ek sachche aur khoobsurat rishte ka natural safar hai."]
+];
+const $=id=>document.getElementById(id);
+let name="",i=0,score=0,lock=false;
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id))}
+function fit(){const qa=$('qa');let f=17;qa.style.fontSize=f+'px';while(qa.scrollHeight>qa.clientHeight+1&&f>9){f-=.5;qa.style.fontSize=f+'px'}}
+const MAX=5;
+function att(){try{const a=JSON.parse(store.get('quiz_att')||'[]');return Array.isArray(a)?a.slice(0,MAX):[]}catch(e){return[]}}
+function saveAtt(a){store.set('quiz_att',JSON.stringify(a))}
+function best(){const d=att().filter(x=>x!==null);return d.length?Math.max(...d):null}
+function nameInfo(){$('sb').style.display=att().some(x=>x!==null)?'':'none';const a=att(),b=best();$('best').textContent=a.length?('Attempts used: '+a.length+'/'+MAX+(b!==null?'  |  Best: '+b+'/10':'')):('You get '+MAX+' attempts')}
+function start(){name=$('nm').value.trim();if(!name){$('nm').focus();$('nm').style.borderColor='var(--no)';return}
+ store.set('quiz_name',name);startGame()}
+function startGame(){const a=att();if(a.length>=MAX){finish(true);return}
+ a.push(null);saveAtt(a);i=0;score=0;$('who').textContent=name;show('s-quiz');load()}
+const PL=[['#ff7eb6','#ffe3f1','#e6dcff'],['#a78bfa','#e6dcff','#d3f1ff'],['#2fb985','#d8f8e8','#d3f1ff'],['#ff9f5a','#ffe9d1','#ffe3f1'],['#4da3ff','#d3ecff','#e6dcff'],['#ef6aa0','#ffd9e8','#fff1c9'],['#8b7bff','#e0dcff','#ffd9e8'],['#e8a317','#fff1c9','#ffe3f1'],['#ff6b8b','#ffd9e2','#e6dcff'],['#2fbfbf','#d0f5f3','#e6dcff']];
+function theme(n){const c=PL[n%PL.length],r=document.documentElement.style;r.setProperty('--acc',c[0]);r.setProperty('--qbg','linear-gradient(160deg,'+c[1]+','+c[2]+')')}
+function load(){lock=false;const d=D[i];theme(i);$('cnt').textContent=(i+1)+'/'+D.length;$('sc').textContent='Score: '+score;$('pg').style.width=(i/D.length*100)+'%';
+ $('tt').textContent='Quiz '+(i+1)+': '+d[0];$('qq').textContent=d[1];
+ const o=[{t:d[2],c:1},{t:d[3],c:0}];if(Math.random()<.5)o.reverse();
+ const box=$('oo');box.innerHTML='';
+ o.forEach((x,k)=>{const b=document.createElement('button');b.className='opt';const l=document.createElement('span');l.className='lt';l.textContent=String.fromCharCode(65+k);const t=document.createElement('span');t.textContent=x.t;b.append(l,t);b.onclick=()=>pick(b,x.c);b.dataset.c=x.c;box.appendChild(b)});
+ fit()}
+function pick(b,c){if(lock)return;lock=true;if(c)score++;
+ document.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.c==='1')x.classList.add('ok')});
+ if(!c)b.classList.add('no');$('sc').textContent='Score: '+score;
+ setTimeout(()=>{i++;i<D.length?load():finish()},1300)}
+function finish(view){theme(0);$('pg').style.width='100%';
+ let a=att();if(!view){a[a.length-1]=score;saveAtt(a)}
+ const b=best()||0,left=MAX-a.length,sh=view?b:score;
+ $('en').textContent=name+(view?", your best score":", your final score");
+ $('fs').textContent=sh+'/'+D.length;$('pc').textContent=(sh*10)+'% correct';
+ $('ms').textContent=msgFor(sh);
+ const at=$('at');at.innerHTML='';
+ for(let k=0;k<MAX;k++){const c=document.createElement('div');c.className='chip';const l=document.createElement('span');l.textContent='Attempt '+(k+1);const v=document.createElement('b');
+  if(k>=a.length){v.textContent='-';c.classList.add('empty')}else if(a[k]===null){v.textContent='Quit'}else{v.textContent=a[k]+'/'+D.length;if(a[k]===b)c.classList.add('top')}
+  c.append(l,v);at.appendChild(c)}
+ $('bs').textContent=left>0?('Attempts left: '+left+' of '+MAX):('All '+MAX+' attempts used. Best score: '+b+'/'+D.length);
+ const ag=$('again');ag.disabled=left<=0;ag.textContent=left>0?('Play Again ('+left+' left)'):'No attempts left';
+ show('s-end')}
+function msgFor(v){return v===10?"Perfect! You know this mind inside out.":v>=7?"Great job! You understand it really deeply.":v>=4?"Not bad! Look a little more closely.":"Still lots to learn. Try again!"}
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2200)}
+function shot(){const a=att(),b=best()||0,left=MAX-a.length;const done=a.filter(x=>x!==null);const sh=left<=0?b:(done.length?done[done.length-1]:0);
+ const cv=document.createElement('canvas');cv.width=1080;cv.height=1920;const c=cv.getContext('2d');c.scale(2,2);
+ const g=c.createLinearGradient(0,0,540,960);g.addColorStop(0,'#ffe3f1');g.addColorStop(.5,'#e6dcff');g.addColorStop(1,'#d3f1ff');c.fillStyle=g;c.fillRect(0,0,540,960);
+ c.textAlign='center';c.fillStyle='#7a3d7e';c.font='700 30px system-ui,sans-serif';c.fillText('Samaj Aur Bheed Quiz',270,90);
+ c.fillStyle='#8a5a8e';c.font='600 22px system-ui,sans-serif';c.fillText(name,270,138);
+ c.font='600 16px system-ui,sans-serif';c.fillText(left<=0?'Best score':'Latest score',270,215);
+ c.fillStyle='#ff7eb6';c.font='800 120px system-ui,sans-serif';c.fillText(sh+'/'+D.length,270,330);
+ c.fillStyle='#8a5a8e';c.font='600 18px system-ui,sans-serif';c.fillText((sh*10)+'% correct',270,368);
+ c.fillStyle='#fff';rr(c,50,396,440,56,16);c.fill();c.fillStyle='#6b4a73';c.font='600 16px system-ui,sans-serif';c.fillText(msgFor(sh),270,430);
+ c.fillStyle='#7a3d7e';c.font='700 20px system-ui,sans-serif';c.fillText('Your attempts',270,500);
+ for(let k=0;k<MAX;k++){const y=520+k*66,used=k<a.length,v=a[k];c.fillStyle=used&&v===b&&v!==null?'#ffd6e7':'#fff';rr(c,50,y,440,54,16);c.fill();
+  c.textAlign='left';c.fillStyle='#6b4a73';c.font='600 18px system-ui,sans-serif';c.fillText('Attempt '+(k+1),72,y+33);
+  c.textAlign='right';c.fillStyle=used?'#ff5fa2':'#b9a6c4';c.font='800 22px system-ui,sans-serif';c.fillText(!used?'-':(v===null?'Quit':v+'/'+D.length),468,y+34)}
+ c.textAlign='center';c.fillStyle='#8a5a8e';c.font='600 15px system-ui,sans-serif';c.fillText(left>0?('Attempts left: '+left+' of '+MAX):('All '+MAX+' attempts used'),270,890);
+ c.font='500 13px system-ui,sans-serif';c.fillText(new Date().toLocaleString(),270,920);
+ cv.toBlob(async bl=>{if(!bl){toast('Could not create image');return}
+  const f=new File([bl],'quiz-result.png',{type:'image/png'});
+  try{if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:'Quiz result'});return}}catch(e){if(e&&e.name==='AbortError')return}
+  try{const u=URL.createObjectURL(bl),l=document.createElement('a');l.href=u;l.download='quiz-result.png';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);toast('Screenshot saved!')}catch(e){toast('Save not supported here')}},'image/png')}
+$('go').onclick=start;
+$('nm').addEventListener('keydown',e=>{if(e.key==='Enter')start()});
+$('again').onclick=()=>{if(att().length>=MAX)return;startGame()};
+$('shot').onclick=shot;
+$('sb').onclick=()=>finish(true);
+$('back').onclick=()=>{nameInfo();show('s-name')};
+window.addEventListener('resize',()=>{if($('s-quiz').classList.contains('on'))fit()});
+(function(){const n=store.get('quiz_name');if(n){name=n;$('nm').value=n;$('nm').readOnly=true}nameInfo();if(n&&att().length>=MAX)finish(true)})();
+</script>
+<script>
+(function(){const stop=e=>e.preventDefault();
+['copy','cut','paste','contextmenu','dragstart','drop'].forEach(t=>document.addEventListener(t,stop));
+document.addEventListener('selectstart',e=>{if(!(e.target&&e.target.tagName==='INPUT'))e.preventDefault()});
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&'cxvasup'.includes(e.key.toLowerCase()))e.preventDefault();if([' ','PageDown','PageUp','Home','End','ArrowDown','ArrowUp'].includes(e.key)&&e.target.tagName!=='INPUT')e.preventDefault()});
+document.addEventListener('wheel',stop,{passive:false});
+document.addEventListener('touchmove',e=>{if(e.target.tagName!=='INPUT')e.preventDefault()},{passive:false});
+const top=()=>{window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0};
+window.addEventListener('scroll',top);window.addEventListener('resize',top);document.addEventListener('focusin',()=>setTimeout(top,50));
+const nm=document.getElementById('nm');nm.setAttribute('autocorrect','off');nm.setAttribute('spellcheck','false');
+nm.addEventListener('input',()=>{nm.value=nm.value.replace(/[<>]/g,'')});
+})();
+</script>
+</body>
+</html>
