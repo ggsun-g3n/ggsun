@@ -1,1 +1,285 @@
-y
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy - TWOZYER</title>
+    <!-- Favicon Add Kiya Gaya Hai -->
+    <link rel="icon" type="image/png" href="https://gg-sun.in/favicon.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+      :root {
+            --bg-black: #0a0a0c;
+            --card-dark: #121215;
+            --box-grey: #1c1c21;
+            --border-grey: #27272a;
+            --text-white: #ffffff;
+            --text-grey: #a1a1aa;
+            --btn-bg: #27272a;
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box;
+            -webkit-user-select: none; 
+            -ms-user-select: none; 
+            user-select: none; 
+            -webkit-tap-highlight-color: transparent; 
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: radial-gradient(circle at top, #18181b, var(--bg-black));
+            color: var(--text-white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .notification {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--box-grey);
+            color: var(--text-white);
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid var(--border-grey);
+            width: 85%;
+            max-width: 320px;
+            justify-content: center;
+        }
+
+        .notification.show {
+            top: 15px;
+        }
+
+        .hero-container {
+            max-width: 480px;
+            margin: 15px auto;
+            padding: 18px 15px;
+            background: var(--card-dark);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--border-grey);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        /* --- Privacy Policy Section --- */
+        .policy-section {
+            text-align: left;
+            background: var(--box-grey);
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid var(--border-grey);
+        }
+
+        .policy-section h2 {
+            color: var(--text-white);
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            text-align: center;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .policy-section h3 {
+            color: var(--text-white);
+            font-size: 0.95rem;
+            margin-top: 14px;
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+
+        .policy-section p {
+            color: var(--text-grey);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 8px;
+            font-weight: 400;
+        }
+
+        .policy-section a {
+            color: var(--text-white);
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        .rating-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding-top: 14px;
+            border-top: 1px dashed var(--border-grey);
+        }
+
+        .star-group { 
+            display: flex; 
+            gap: 8px; 
+            justify-content: center; 
+        }
+
+        .star-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            border: 1px solid var(--border-grey);
+            background: var(--btn-bg);
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text-grey);
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .star-btn:not(.locked):hover {
+            background: var(--text-grey);
+            color: var(--bg-black);
+        }
+
+        .star-btn.active {
+            background: var(--text-white);
+            color: var(--bg-black);
+            border-color: var(--text-white);
+        }
+
+        .star-btn.locked {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        footer {
+            padding: 15px 10px;
+            text-align: center;
+            color: var(--text-grey);
+            font-size: 0.75rem;
+            width: 100%;
+        }
+    </style>
+  </head>
+  <body oncontextmenu="return false;">
+    <div id="notif" class="notification">
+      <i class="fas fa-star"></i>
+      <span id="notif-text">Rating saved!</span>
+    </div>
+
+    <div class="hero-container">
+      
+      <div class="policy-section">
+        <h2>Privacy Policy</h2>
+        <p>Welcome to TWOZYER! We value your privacy and believe in complete transparency regarding how your data is handled on our multi-business platform.</p>
+        
+        <h3>1. Information We Collect</h3>
+        <p>To provide our services, we collect your <strong>email address</strong>, a <strong>custom username</strong> (real names are not required), <strong>UPI ID</strong>, <strong>wallet balance</strong>, and your <strong>deposit, withdrawal, and transaction history</strong>.</p>
+
+        <h3>2. How We Use Your Data</h3>
+        <p>Your financial data is securely sent to our admin panel to verify <strong>fractional decimal payments</strong>. This ensures that your deposits, withdrawals, and platform transactions remain fully accurate and operational.</p>
+
+        <h3>3. Data Sharing & Third-Party Apps</h3>
+        <p>Because TWOZYER hosts multiple applications, your data is <strong>never</strong> sold to outside ad agencies. Your relevant information (such as your username, UPI ID, and balance) is shared <strong>only</strong> with the specific third-party business owner whose app you are actively using.</p>
+
+        <h3>4. Data Security & Tracking</h3>
+        <p>Your data is stored safely in our <strong>Supabase</strong> cloud database, which acts as a secure vault. We do not track your specific device or IP address. We only utilize Local Storage to maintain basic login sessions.</p>
+
+        <h3>5. Auto-Deletion & Your Rights</h3>
+        <p>You retain full control over your account and can delete it at any time. To keep our systems clean, if your account remains inactive for <strong>7 continuous months</strong>, our system will automatically delete your account and all associated data permanently, without any prior notification.</p>
+
+        <h3>6. Age Restrictions</h3>
+        <p>TWOZYER does not enforce a platform-wide age restriction. However, individual third-party apps hosted on our platform may implement their own age limitations based on their specific products, which users must follow.</p>
+
+        <h3>7. Contact Us</h3>
+        <p>If you have any questions regarding your privacy, data security, or need support, please contact us at: <strong>twozyer@gmail.com</strong>.</p>
+      </div>
+
+      <div class="rating-container">
+        <span style="font-size: 0.75rem; font-weight: 800; color: var(--text-grey); letter-spacing: 1px;">RATE YOUR EXPERIENCE</span>
+        <div class="star-group" id="star-group">
+          <button class="star-btn" data-val="1" onclick="setRating(1)">1</button>
+          <button class="star-btn" data-val="2" onclick="setRating(2)">2</button>
+          <button class="star-btn" data-val="3" onclick="setRating(3)">3</button>
+          <button class="star-btn" data-val="4" onclick="setRating(4)">4</button>
+          <button class="star-btn" data-val="5" onclick="setRating(5)">5</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>
+        Copyright © 2025-2026 TWOZYER
+        <br />
+        All rights reserved.
+      </p>
+    </footer>
+
+    <script>
+      let isLocked = false;
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const savedRating = localStorage.getItem('userRating');
+        if (savedRating) {
+            highlightStars(savedRating);
+            lockRating();
+        }
+      });
+
+      function showNotification(msg) {
+        const notif = document.getElementById('notif');
+        const notifText = document.getElementById('notif-text');
+        notifText.innerText = msg;
+        notif.classList.add('show');
+        
+        setTimeout(() => {
+            notif.classList.remove('show');
+        }, 3000);
+      }
+
+      function setRating(n) {
+        if (isLocked) {
+            showNotification("You have already rated!");
+            return;
+        }
+
+        localStorage.setItem('userRating', n);
+        highlightStars(n);
+        showNotification(`Rated ${n} stars! Thank you.`);
+        lockRating();
+      }
+
+      function highlightStars(n) {
+        const stars = document.querySelectorAll('.star-btn');
+        stars.forEach(star => {
+            star.classList.remove('active');
+            if (star.getAttribute('data-val') == n) {
+                star.classList.add('active');
+            }
+        });
+      }
+
+      function lockRating() {
+          isLocked = true;
+          const stars = document.querySelectorAll('.star-btn');
+          stars.forEach(star => {
+              star.classList.add('locked');
+          });
+      }
+    </script>
+  </body>
+</html>
